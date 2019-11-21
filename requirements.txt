@@ -1,0 +1,4 @@
+django
+moz-sql-parser
+redis
+mmh3

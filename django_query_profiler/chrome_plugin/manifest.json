@@ -1,0 +1,14 @@
+{
+	"name": "Django Query Profiler",
+	"version": "0.1",
+	"description": "Django query profiler (using query signature)",
+	"manifest_version": 2,
+	"devtools_page": "devtools.html",
+	"options_page": "panel_table.html",
+	"permissions": [
+		"<all_urls>",
+		"webRequest",
+		"webRequestBlocking",
+		"tabs"
+	]
+}

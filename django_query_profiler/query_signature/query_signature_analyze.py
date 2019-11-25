@@ -20,11 +20,11 @@ def stack_trace_element(func: Callable) -> StackTraceElement:
 
 
 '''
-Django does a very good job of defining different functions for say, when it wants to make a call for a select related 
-call, and one where it is prefetching some relationship, when the user has used a prefetch_missing/Prefetch.   
+Django does a very good job of defining different functions for say, when it wants to make a call for a select related
+call, and one where it is prefetching some relationship, when the user has used a prefetch_missing/Prefetch.
 For others like filter, we came up via observation.
-NB: This is not a complete check though.  E.g. in missing prefetch, the stack trace is just one of the check.  Rest of 
-     the check is in the "code_recommendation" function    
+NB: This is not a complete check though.  E.g. in missing prefetch, the stack trace is just one of the check.  Rest of
+     the check is in the "code_recommendation" function
 '''
 MISSING_SELECT_RELATED_STACK_TRACE_ELEMENT = stack_trace_element(ForwardManyToOneDescriptor.get_object)
 GET_STACK_TRACE_ELEMENT = stack_trace_element(QuerySet.get)

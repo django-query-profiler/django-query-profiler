@@ -59,7 +59,8 @@ class StackTracerTest(TestCase):
         self.assertEqual(_keys_set_for_passed_value(memoized_value_django_modules, False), set(app_module_names))
 
     def test_valid_django_params(self):
-        app_stack_trace, django_stack_trace = stack_tracer.find_stack_trace((),
+        app_stack_trace, django_stack_trace = stack_tracer.find_stack_trace(
+            (),
             (stack_tracer.find_stack_trace.__module__, self.__module__, 'unittest'), 100)
 
         django_module_names = {stack_trace.module_name for stack_trace in django_stack_trace}

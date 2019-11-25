@@ -15,7 +15,8 @@ class QueryProfilerDatabaseWrapperMixin(BaseDatabaseWrapper, ABC):
 
     def cursor(self):
         cursor_wrapper = super().cursor()
-        kwargs = dict(cursor=cursor_wrapper.cursor,
+        kwargs = dict(
+            cursor=cursor_wrapper.cursor,
             db=cursor_wrapper.db,
             db_row_count=self.db_row_count(cursor_wrapper.cursor))
 

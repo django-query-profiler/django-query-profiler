@@ -9,9 +9,9 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_filter_exists(self):
         query_without_params = '''
-            SELECT (1) AS a FROM company_health_enrollment 
-            WHERE (company_health_enrollment.lineOfCoverage = %s AND company_health_enrollment.company_id = %s 
-                AND company_health_enrollment.isActive = %s AND company_health_enrollment.isEnrollmentComplete = %s) 
+            SELECT (1) AS a FROM company_health_enrollment
+            WHERE (company_health_enrollment.lineOfCoverage = %s AND company_health_enrollment.company_id = %s
+                AND company_health_enrollment.isActive = %s AND company_health_enrollment.isEnrollmentComplete = %s)
             LIMIT 1
         '''
 
@@ -29,12 +29,12 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_filter_first(self):
         query_without_params = '''
-            SELECT employee_health_enrollment.id, employee_health_enrollment.employee_id, 
-                   employee_health_enrollment.createdAt, employee_health_enrollment.version_id, 
-                   employee_health_enrollment.premiumsMap, employee_health_enrollment.progress 
-            FROM employee_health_enrollment 
-            WHERE (employee_health_enrollment.employee_id = %s AND employee_health_enrollment.type = %s 
-                AND employee_health_enrollment.isActive = %s AND employee_health_enrollment.coverage_type = %s) 
+            SELECT employee_health_enrollment.id, employee_health_enrollment.employee_id,
+                   employee_health_enrollment.createdAt, employee_health_enrollment.version_id,
+                   employee_health_enrollment.premiumsMap, employee_health_enrollment.progress
+            FROM employee_health_enrollment
+            WHERE (employee_health_enrollment.employee_id = %s AND employee_health_enrollment.type = %s
+                AND employee_health_enrollment.isActive = %s AND employee_health_enrollment.coverage_type = %s)
             ORDER BY employee_health_enrollment.id ASC LIMIT 1
         '''
         table_names, _, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
@@ -54,9 +54,9 @@ class QuerySignatureAnalyzeTest(TestCase):
     def test_filter(self):
         query_without_params = '''
             SELECT company_rate_version.id, company_rate_version.planId, company_rate_version.companyHealthEnrollmentId,
-                   company_rate_version.companyId, company_rate_version.quoteParams 
-            FROM company_rate_version 
-            WHERE (company_rate_version.companyId IN (%s) AND company_rate_version.lineOfCoverage = %s 
+                   company_rate_version.companyId, company_rate_version.quoteParams
+            FROM company_rate_version
+            WHERE (company_rate_version.companyId IN (%s) AND company_rate_version.lineOfCoverage = %s
                   AND company_rate_version.planId IN (%s))
         '''
         table_names, _, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
@@ -73,12 +73,12 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_filter_with_join(self):
         query_without_params = '''
-            SELECT (1) AS a 
-            FROM change_request 
-                INNER JOIN employment_type_change 
-                    ON ( change_request.employmentTypeChange_id = employment_type_change.id ) 
-            WHERE (change_request.employee_id = %s AND change_request.isApplied = %s 
-                AND employment_type_change.employmentType = %s) 
+            SELECT (1) AS a
+            FROM change_request
+                INNER JOIN employment_type_change
+                    ON ( change_request.employmentTypeChange_id = employment_type_change.id )
+            WHERE (change_request.employee_id = %s AND change_request.isApplied = %s
+                AND employment_type_change.employmentType = %s)
             LIMIT 1
         '''
         table_names, _, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
@@ -94,11 +94,11 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_get(self):
         query_without_params = '''
-            SELECT register_company_employee.id, register_company_employee.version_id, 
-                   register_company_employee.user_id, register_company_employee.company_id, 
+            SELECT register_company_employee.id, register_company_employee.version_id,
+                   register_company_employee.user_id, register_company_employee.company_id,
                    register_company_employee.isHighlyCompensated, register_company_employee.middleInitial
-            FROM register_company_employee 
-            WHERE register_company_employee.id = %s 
+            FROM register_company_employee
+            WHERE register_company_employee.id = %s
             LIMIT 21
         '''
         table_names, _, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
@@ -117,9 +117,9 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_prefetch_related(self):
         query_without_params = '''
-            SELECT employee_employment.id, employee_employment.version_id, employee_employment.isActive, 
-                   employee_employment.fullTimeStartDate_is_set, employee_employment.fullTimeEndDate_is_set 
-            FROM employee_employment 
+            SELECT employee_employment.id, employee_employment.version_id, employee_employment.isActive,
+                   employee_employment.fullTimeStartDate_is_set, employee_employment.fullTimeEndDate_is_set
+            FROM employee_employment
             WHERE employee_employment.employee_id = %s
         '''
         table_names, _, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
@@ -136,11 +136,11 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_select_related(self):
         query_without_params = '''
-            SELECT employee_settings.id, employee_settings.employee_id, employee_settings.groupID, 
-                   employee_settings.dentalGroupID, employee_settings.visionGroupID, 
-                   employee_settings.dentalCompanyHealthCarrier_id_is_set 
-            FROM employee_settings 
-            WHERE employee_settings.employee_id = %s 
+            SELECT employee_settings.id, employee_settings.employee_id, employee_settings.groupID,
+                   employee_settings.dentalGroupID, employee_settings.visionGroupID,
+                   employee_settings.dentalCompanyHealthCarrier_id_is_set
+            FROM employee_settings
+            WHERE employee_settings.employee_id = %s
         '''
         table_names, _, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
         self.assertListEqual(table_names, ['employee_settings'])
@@ -159,9 +159,9 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_prefetch_related_2(self):
         query_without_params = '''
-            SELECT employee_health_enrollment.id, employee_health_enrollment.employee_id, 
-                    employee_health_enrollment.progress 
-             FROM employee_health_enrollment 
+            SELECT employee_health_enrollment.id, employee_health_enrollment.employee_id,
+                    employee_health_enrollment.progress
+             FROM employee_health_enrollment
              WHERE employee_health_enrollment.employee_id = %s
         '''
         table_names, _, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
@@ -179,9 +179,9 @@ class QuerySignatureAnalyzeTest(TestCase):
 
     def test_select_related_2(self):
         query_without_params = '''
-            SELECT carrier.id, carrier.carrierID, carrier.name, carrier.displayName, carrier.state, 
-                   carrier.newHireApprovalProcessingDays 
-            FROM carrier WHERE carrier.id = %s 
+            SELECT carrier.id, carrier.carrierID, carrier.name, carrier.displayName, carrier.state,
+                   carrier.newHireApprovalProcessingDays
+            FROM carrier WHERE carrier.id = %s
             LIMIT 21
         '''
 

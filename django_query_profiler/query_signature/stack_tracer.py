@@ -24,7 +24,7 @@ LINE_NUMBER_DEFAULT_VALUE = -1
 
 
 def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_names_to_include: Tuple[str],
-                    max_depth: int) -> Tuple[Tuple[StackTraceElement], Tuple[StackTraceElement]]:
+                     max_depth: int) -> Tuple[Tuple[StackTraceElement], Tuple[StackTraceElement]]:
     '''
     This function finds the stack trace from the frame and returns a tuple of application & django stack-trace
     The exclusion and inclusion list should be mutually exclusive (they would be in practice), but if they are not -
@@ -41,8 +41,7 @@ def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_name
     try:
         while current_iteration < max_depth and current_frame is not None:
             module_name = _module_name_from_frame(current_frame)
-
-            ''' 
+            '''
             We would fist check if the stack_trace can be included in django stack trace because that list is the
             include list.  If it can be included in django one, we would not add it to app stack_trace list
             If not, we would check if it can be included in the app list based on the passed exclusion list

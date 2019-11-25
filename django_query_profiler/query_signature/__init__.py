@@ -66,7 +66,7 @@ class QuerySignature:
         app_stack_trace_str = '\n'.join(map(str, self.app_stack_trace))
         django_stack_trace_str = '\n'.join(map(str, self.django_stack_trace))
 
-        return f'''Query: \n {self.query_without_params}  \n{'##' * 20}\n app-stack-trace: \n {app_stack_trace_str} 
+        return f'''Query: \n {self.query_without_params}  \n{'##' * 20}\n app-stack-trace: \n {app_stack_trace_str}
                 \n{'##' * 20}\n django-stack-trace:\n {django_stack_trace_str} \n{'**' * 80}\n'''
 
     @cached_property
@@ -247,4 +247,4 @@ class QueryProfilerType(Enum):
 # #####################################################################################################################
 def merge_dicts(first_dict: Dict, second_dict: Dict, op: Callable) -> OrderedDict:
     return OrderedDict(list(first_dict.items()) + list(second_dict.items()) +
-                [(key, op(first_dict[key], second_dict[key])) for key in set(second_dict) & set(first_dict)])
+                       [(key, op(first_dict[key], second_dict[key])) for key in set(second_dict) & set(first_dict)])

@@ -4,10 +4,9 @@ __pycache__/
 
 # Distribution / packaging
 eggs/
+.eggs/
 *.egg-info/
 *.egg
 build/
 develop-eggs/
 dist/
-
-

@@ -1,6 +1,4 @@
-from django.conf import settings
-
-QUERY_PROFILER_ENABLED: bool = settings.DEBUG  # Enable only for DEBUG
+QUERY_PROFILER_ENABLED: bool = True
 QUERY_PROFILER_REDIS_HOST: str = 'localhost'
 QUERY_PROFILER_REDIS_PORT: int = 6379
 QUERY_PROFILER_REDIS_DB: int = 0

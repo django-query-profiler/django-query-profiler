@@ -37,8 +37,9 @@ Getting It
 
     ii. You can get the chrome extension by following these steps::
 
-       git clone git://github.com/django-query-profiler/django-query-profiler-chrome-plugin.git
-       Open chrome://extensions in any chromium based browser,
+        git clone git://github.com/django-query-profiler/django-query-profiler-chrome-plugin.git
+
+        Open chrome://extensions in any chromium based browser,
           - check Developer mode,
           - click on load unpacked.
           - Select the cloned package above

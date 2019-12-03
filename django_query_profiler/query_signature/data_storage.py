@@ -70,8 +70,8 @@ class QueryProfilerThreadLocalStorage(threading.local):
         self._query_profiler_enabled: bool = False
         self._query_profiled_data_list: List[QueryProfiledData] = []
         self._entry_index_stack: List[int] = []
-        self._query_profiler_type_stack: List[QueryProfilerLevel] = []
-        self._current_query_profiler_type: Union[QueryProfilerLevel, None] = None
+        self._query_profiler_level_stack: List[QueryProfilerLevel] = []
+        self._current_query_profiler_level: Union[QueryProfilerLevel, None] = None
 
     def reset(self) -> None:
         self.__init__()
@@ -80,7 +80,7 @@ class QueryProfilerThreadLocalStorage(threading.local):
         return f'_query_profiler_enabled={self._query_profiler_enabled}, ' \
             f'query_profiled_data_list={self._query_profiled_data_list}, _entry_index_stack={self._entry_index_stack}'
 
-    def enter_profiler_mode(self, query_profiler_type: QueryProfilerLevel) -> None:
+    def enter_profiler_mode(self, query_profiler_level: QueryProfilerLevel) -> None:
         self._query_profiler_enabled = True
 
         # Put index to use in stack
@@ -91,9 +91,9 @@ class QueryProfilerThreadLocalStorage(threading.local):
         empty_query_profiled_data: QueryProfiledData = QueryProfiledData()
         self._query_profiled_data_list.append(empty_query_profiled_data)
 
-        # Append the passed query_profiler_type to the stack that maintains
-        self._query_profiler_type_stack.append(query_profiler_type)
-        self._current_query_profiler_type = sum(self._query_profiler_type_stack)
+        # Append the passed query_profiler_level to the stack that maintains
+        self._query_profiler_level_stack.append(query_profiler_level)
+        self._current_query_profiler_level = sum(self._query_profiler_level_stack)
 
     def exit_profiler_mode(self) -> QueryProfiledData:
         if not self._entry_index_stack:
@@ -103,8 +103,8 @@ class QueryProfilerThreadLocalStorage(threading.local):
         combined_query_profiler_data = sum(self._query_profiled_data_list[last_enter_index:])
 
         if self._entry_index_stack:
-            self._query_profiler_type_stack.pop()
-            self._current_query_profiler_type = sum(self._query_profiler_type_stack)
+            self._query_profiler_level_stack.pop()
+            self._current_query_profiler_level = sum(self._query_profiler_level_stack)
         else:
             # If it is the last exit, reset everything
             self.reset()
@@ -118,15 +118,15 @@ class QueryProfilerThreadLocalStorage(threading.local):
             return
 
         start_time = time()
-        if self._current_query_profiler_type.normalize_sql and params:
+        if self._current_query_profiler_level.normalize_sql and params:
             sql_normalized = re.sub(RE_NORMALIZE_REPEATED_PARAMS_PERCENT, '%s', query_without_params)
         else:
             sql_normalized = query_without_params
 
         app_stack_trace, django_stack_trace = find_stack_trace(
-                app_module_names_to_exclude=settings.DJANGO_QUERY_PROFILER_APPS_TO_REMOVE,
+                app_module_names_to_exclude=settings.DJANGO_QUERY_PROFILER_APPS_MODULES_TO_REMOVE,
                 django_module_names_to_include=(django_base_model.__name__, ),
-                max_depth=self._current_query_profiler_type.stack_trace_depth)
+                max_depth=self._current_query_profiler_level.stack_trace_depth)
 
         # New query_signature & query_signature_statistics instances
         query_signature = QuerySignature(

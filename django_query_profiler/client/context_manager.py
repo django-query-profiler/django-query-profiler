@@ -13,15 +13,15 @@ from django_query_profiler.query_signature.data_storage import \
 
 class QueryProfiler:
 
-    def __init__(self, query_profiler_type, clear_thread_local: bool = False):
+    def __init__(self, query_profiler_level, clear_thread_local: bool = False):
         if clear_thread_local:
             query_profiler_thread_local_storage.reset()
 
         self.query_profiled_data: Union[QueryProfiledData, None] = None
-        self.query_profiler_type: QueryProfilerLevel = query_profiler_type
+        self.query_profiler_level: QueryProfilerLevel = query_profiler_level
 
     def __enter__(self):
-        query_profiler_thread_local_storage.enter_profiler_mode(self.query_profiler_type)
+        query_profiler_thread_local_storage.enter_profiler_mode(self.query_profiler_level)
         return self
 
     def __exit__(self, *_) -> None:

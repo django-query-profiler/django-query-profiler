@@ -19,9 +19,6 @@ list in the same run
 MEMO_DJANGO_MODULE_NAME_DECISION: Dict[Tuple[str], Dict[str, bool]] = defaultdict(dict)
 MEMO_APP_MODULE_NAME_DECISION: Dict[Tuple[str], Dict[str, bool]] = defaultdict(dict)
 
-MODULE_NAME_DEFAULT_VALUE = FUNCTION_NAME_DEFAULT_VALUE = ''
-LINE_NUMBER_DEFAULT_VALUE = -1
-
 
 def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_names_to_include: Tuple[str],
                      max_depth: int) -> Tuple[Tuple[StackTraceElement], Tuple[StackTraceElement]]:
@@ -83,21 +80,12 @@ def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_name
 
 
 def _module_name_from_frame(frame):
-    try:
-        return frame.f_globals['__name__']
-    except Exception:
-        return MODULE_NAME_DEFAULT_VALUE
+    return frame.f_globals['__name__']
 
 
 def _function_name_from_frame(frame):
-    try:
-        return frame.f_code.co_name
-    except Exception:
-        return FUNCTION_NAME_DEFAULT_VALUE
+    return frame.f_code.co_name
 
 
 def _line_number_from_frame(frame):
-    try:
-        return frame.f_lineno
-    except Exception:
-        return LINE_NUMBER_DEFAULT_VALUE
+    return frame.f_lineno

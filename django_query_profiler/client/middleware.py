@@ -28,9 +28,9 @@ class QueryProfilerMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Check if we have to enable query profiler or not.  And if we have to enable - what type of query profiler
-        query_profiler_type: Union[QueryProfilerLevel, None] = settings.DJANGO_QUERY_PROFILER_TYPE_FUNC(request)
-        if not query_profiler_type:
+        # Check if we have to enable query profiler or not.
+        query_profiler_level: Union[QueryProfilerLevel, None] = settings.DJANGO_QUERY_PROFILER_LEVEL_FUNC(request)
+        if not query_profiler_level:
             return self.get_response(request)
 
         start_time: float = time()
@@ -38,7 +38,7 @@ class QueryProfilerMiddleware:
         Lets clear all the storage related to this thread.  This is not strictly needed, but just as a safety measure
         As a side effect, this implies that we *CANNOT* use this middleware twice for a request
         '''
-        with QueryProfiler(query_profiler_type, clear_thread_local=True) as query_profiler:
+        with QueryProfiler(query_profiler_level, clear_thread_local=True) as query_profiler:
             response = self.get_response(request)
 
         # Pickling the object, and saving to redis
@@ -47,7 +47,7 @@ class QueryProfilerMiddleware:
 
         # Constructing detailed view url
         query_profiled_detail_relative_url: str = reverse(query_profiler_url.GET_QUERY_PROFILED_DATA_NAME,
-                                                          args=[redis_key, query_profiler_type.name])
+                                                          args=[redis_key, query_profiler_level.name])
         query_profiled_detail_absolute_url: str = request.build_absolute_uri(query_profiled_detail_relative_url)
 
         # Setting all headers that the chrome plugin require
@@ -55,5 +55,5 @@ class QueryProfilerMiddleware:
         response[ChromePluginData.QUERY_PROFILED_DETAILED_URL] = query_profiled_detail_absolute_url
         response[ChromePluginData.TIME_SPENT_PROFILING_IN_MICROS] = query_profiled_data.time_spent_profiling_in_micros
         response[ChromePluginData.TOTAL_SERVER_TIME_IN_MILLIS] = int((time() - start_time) * 1000)
-        response[ChromePluginData.QUERY_PROFILER_TYPE] = query_profiler_type.name
+        response[ChromePluginData.QUERY_PROFILER_LEVEL] = query_profiler_level.name
         return response

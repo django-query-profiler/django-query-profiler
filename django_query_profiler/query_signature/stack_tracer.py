@@ -1,12 +1,12 @@
-'''
+"""
 This module contains one public function - for finding the stack_trace partitioned into a tuple of two items:
 1. app_stack_trace
 2. django_stack_trace
-'''
+"""
 
 import inspect
-from typing import Dict, List, Tuple
 from collections import defaultdict
+from typing import Dict, List, Tuple
 
 from . import StackTraceElement
 
@@ -25,12 +25,11 @@ LINE_NUMBER_DEFAULT_VALUE = -1
 
 def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_names_to_include: Tuple[str],
                      max_depth: int) -> Tuple[Tuple[StackTraceElement], Tuple[StackTraceElement]]:
-    '''
+    """
     This function finds the stack trace from the frame and returns a tuple of application & django stack-trace
     The exclusion and inclusion list should be mutually exclusive (they would be in practice), but if they are not -
     the inclusion list takes precedence & it would be included in django_stack_trace
-    '''
-
+    """
     app_stack_trace: List[StackTraceElement] = []
     django_stack_trace: List[StackTraceElement] = []
     if max_depth <= 0:
@@ -65,13 +64,13 @@ def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_name
             if is_app_stack_trace or is_django_stack_trace:
                 function_name = _function_name_from_frame(current_frame)
                 if is_app_stack_trace:
-                    stack_trace = StackTraceElement.appStackTraceElement(
+                    stack_trace = StackTraceElement.app_stacktrace_element(
                         module_name=module_name,
                         function_name=function_name,
                         line_number=_line_number_from_frame(current_frame))
                     app_stack_trace.append(stack_trace)
                 elif is_django_stack_trace:
-                    stack_trace = StackTraceElement.djangoStackTraceElement(
+                    stack_trace = StackTraceElement.django_stacktrace_element(
                         module_name=module_name,
                         function_name=function_name)
                     django_stack_trace.append(stack_trace)
@@ -84,7 +83,6 @@ def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_name
 
 
 def _module_name_from_frame(frame):
-    ''' Returns module name from frame if it exists.  Else, returns defaultValue '''
     try:
         return frame.f_globals['__name__']
     except Exception:
@@ -92,7 +90,6 @@ def _module_name_from_frame(frame):
 
 
 def _function_name_from_frame(frame):
-    ''' Returns the function name from the frame if it exists.  Else, returns defaultValue '''
     try:
         return frame.f_code.co_name
     except Exception:
@@ -100,7 +97,6 @@ def _function_name_from_frame(frame):
 
 
 def _line_number_from_frame(frame):
-    ''' Returns the line number from the frame if it exists.  Else, returns defaultValue  '''
     try:
         return frame.f_lineno
     except Exception:

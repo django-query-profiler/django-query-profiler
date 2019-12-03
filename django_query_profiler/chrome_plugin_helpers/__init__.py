@@ -1,5 +1,5 @@
 class ChromePluginData:
-    '''The values are also used in chrome plugin.  If you are changing them here, remember to change in chrome plugin'''
+    """The values are also used in chrome plugin.  If you are changing them here, remember to change in chrome plugin"""
     TOTAL_SERVER_TIME_IN_MILLIS = 'X-TOTAL_SERVER_TIME_IN_MILLIS'
     TIME_SPENT_PROFILING_IN_MICROS = 'X-TIME_SPENT_PROFILING_IN_MICROS'
     QUERY_PROFILED_SUMMARY_DATA = 'X-QUERY_PROFILER_SUMMARY_DATA'

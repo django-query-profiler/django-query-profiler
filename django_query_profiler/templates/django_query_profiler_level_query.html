@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    {% load humanize %}
+    {% load number_formatter %}
 
     <head>
         <title>Query Profiled Data</title>
@@ -35,10 +35,10 @@
                 <tbody>
                     <tr>
                         <th>Total</th>
-                        <th>{{ summary.total_query_count|intcomma }}</th>
-                        <th>{{ summary.total_query_execution_time_in_micros|intcomma }} ms</th>
-                        <th>{{ summary.total_db_row_count|intcomma }}</th>
-                        <th>{{ summary.exact_query_duplicates|intcomma }}</th>
+                        <th>{{ summary.total_query_count|commafy }}</th>
+                        <th>{{ summary.total_query_execution_time_in_micros|commafy }} ms</th>
+                        <th>{{ summary.total_db_row_count|commafy }}</th>
+                        <th>{{ summary.exact_query_duplicates|commafy }}</th>
                     </tr>
                 </tbody>
             </table>
@@ -74,7 +74,7 @@
                                 <div class="col-sm-4">
                                     <a data-toggle="collapse" href="#{{ forloop.counter0 }}">
                                         <span style="border-bottom: 1px solid;">
-                                            {{ query_signature_statistics.frequency|intcomma }}
+                                            {{ query_signature_statistics.frequency|commafy }}
                                         </span>
                                     </a>
                                 </div>
@@ -82,14 +82,14 @@
                                 <!-- Sql TIME -->
                                 <div class="col-sm-4">
                                     <span class="badge">
-                                        {{ query_signature_statistics.query_execution_time_in_micros|intcomma }} ms
+                                        {{ query_signature_statistics.query_execution_time_in_micros|commafy }} ms
                                     </span>
                                 </div>
 
                                 <!-- Db rows fetched -->
                                 <div class="col-sm-4">
                                     <span class="badge">
-                                        {{ query_signature_statistics.db_row_count|intcomma }}
+                                        {{ query_signature_statistics.db_row_count|commafy }}
                                     </span>
                                 </div>
                             </h4>

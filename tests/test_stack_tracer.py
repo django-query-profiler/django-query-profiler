@@ -1,14 +1,14 @@
-from typing import Set, Dict
+from typing import Dict, Set
 from unittest import TestCase
 
 from django_query_profiler.query_signature import stack_tracer
 
 
 class StackTracerTest(TestCase):
-    '''
+    """
     Tests for validating if we are able to find the correct stack-trace - and if we are able to exclude the stack-traces
     which we should exclude, and include the correct stack-traces
-    '''
+    """
 
     def test_empty_params(self):
         app_stack_trace, django_stack_trace = stack_tracer.find_stack_trace((), (), 100)
@@ -70,5 +70,5 @@ class StackTracerTest(TestCase):
 
 
 def _keys_set_for_passed_value(dictionary: Dict[str, bool], value_condition: bool) -> Set[str]:
-    ''' A helper function to find all keys for which value in dictionary is value_condition '''
+    """ A helper function to find all keys for which value in dictionary is value_condition """
     return {key for key, value in dictionary.items() if value is value_condition}

@@ -1,13 +1,16 @@
-from unittest import TestCase
 from collections import Counter
+from unittest import TestCase
 
-from django_query_profiler.query_signature import (
-    SqlStatement, QuerySignature, QueryProfiledData, StackTraceElement, QueryProfiledSummaryData,
-    QuerySignatureStatistics)
+from django_query_profiler.query_signature import (QueryProfiledData,
+                                                   QueryProfiledSummaryData,
+                                                   QuerySignature,
+                                                   QuerySignatureStatistics,
+                                                   SqlStatement,
+                                                   StackTraceElement)
 
 
 class QuerySignatureStatisticsTest(TestCase):
-    ''' Tests for checking if "QuerySignatureStatistics" class is additive or not, and to verify if its correct '''
+    """ Tests for checking if "QuerySignatureStatistics" class is additive or not, and to verify if its correct """
 
     def test_query_signature_statistics_addition(self):
         query_signature_statistics_1 = QuerySignatureStatistics(
@@ -26,15 +29,15 @@ class QuerySignatureStatisticsTest(TestCase):
 
 
 class QueryProfiledDataTest(TestCase):
-    '''
+    """
     Tests for checking if "QueryProfiledData" class has the correct code for calculating summary, and if it is additive
-    '''
+    """
 
     query_without_params = "SELECT * FROM table WHERE id=%s"
     params = "1"
     django_stack_trace = [
         StackTraceElement('django.db', 'find', None),
-        StackTraceElement('django.mocels', 'get', None),
+        StackTraceElement('django.models', 'get', None),
         StackTraceElement('django.core', 'wsgi', None),
     ]
     app_stack_trace = [
@@ -81,7 +84,7 @@ class QueryProfiledDataTest(TestCase):
         self.assertEqual(query_profiled_summary_data, expected_query_profiled_summary_data)
 
     def test_query_profiled_data_addition_no_overlapping(self):
-        ''' Query signatures are unique in both query profiled data '''
+        """ Query signatures are unique in both query profiled data """
         query_profiled_data_1 = QueryProfiledData(
             query_signature_to_query_signature_statistics={self.query_signature_1: self.query_signature_statistics_1},
             _query_params_db_hash_counter=Counter(_Some_Hash_=1))
@@ -101,7 +104,7 @@ class QueryProfiledDataTest(TestCase):
         self.assertEqual(sum([query_profiled_data_1, query_profiled_data_2]), expected_query_profiled_data)
 
     def test_query_profiled_data_addition_overlapping(self):
-        ''' Query signature is shared betweend both query profiled data  '''
+        """ Query signature is shared between both query profiled data  """
         query_profiled_data_1 = QueryProfiledData(
             query_signature_to_query_signature_statistics={self.query_signature_1: self.query_signature_statistics_1},
             _query_params_db_hash_counter=Counter(_Some_Hash_=1))

@@ -1,18 +1,19 @@
-'''
+"""
 This module contains the part where we wrap CursorWrapper and CursorDebugWrapper with our function
 that calls to "do something/nothing" after the query is executed
-'''
+"""
 
 from time import time
-from typing import Any, Callable
+from typing import Any, Callable, Union
 
-from django.db.backends.utils import CursorWrapper, CursorDebugWrapper
+from django.db.backends.utils import CursorDebugWrapper, CursorWrapper
 
-from django_query_profiler.query_signature.data_storage import query_profiler_thread_local_storage
+from django_query_profiler.query_signature.data_storage import \
+    query_profiler_thread_local_storage
 
 
 class QueryProfilerCursorWrapper(CursorWrapper):
-    def __init__(self, cursor, db: str, db_row_count: int):
+    def __init__(self, cursor, db: str, db_row_count: Union[int, None]):
         super().__init__(cursor, db)
         self.db_row_count = db_row_count
 

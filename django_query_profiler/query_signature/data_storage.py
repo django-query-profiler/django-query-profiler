@@ -1,4 +1,4 @@
-'''
+"""
 This module is perhaps the one which contains the most logic, and probably the most difficult
 This is the module to which both - context manager, and instrumented cursor delegates the job.  Context manager calls
 it to say "start/stop profiler block", and instrumented cursor calls to say "do something/nothing" with query
@@ -14,7 +14,7 @@ Nested context manager results in following complexity:
 2.  We are supporting two types of QueryProfiler - one of type Query, and one of QuerySignature.   Nesting makes it
     challenging since now, we have to deal with the case of what type of profiler we should run in each block.  We
     also have to deal with issue of various combinations of {Query, QuerySignature} nesting.  Even though the user asks
-    for a given QueryProfilerType, we would have to decide based on nesting, which queryProfilerType would be active
+    for a given queryProfilerLevel, we would have to decide based on nesting, which queryProfilerLevel would be active
 
 The other type of complexity arises from maintaining state across entry/exit and the call to add sql.
 
@@ -30,7 +30,7 @@ Implementation Notes:
     to use a stack of indices (We could have also used a dictionary by assigning every entry block a uuid, and use it
     in dictionary).  A stack would work because when we exit a block, we would pop from the stack
 3.  "QueryProfilerData" is the container that collects all the data that we collect, whenever we get call to
-    "do something/nothing" with query.  When we enter a block, we initilize with an empty container.  Any time we are
+    "do something/nothing" with query.  When we enter a block, we initialize with an empty container.  Any time we are
     asked to "do something/nothing", we add existing data to the new data, create "QueryProfiledData" object which
     has combined data, and use this new object in the list
 4.  For finding which QueryProfilerType would be active, we are again using a stack.  And using the fact that if anyone
@@ -39,30 +39,29 @@ Implementation Notes:
 NB:  As you can see from implementation note above, and code below - this class require a lot of bookkeeping code
      to figure out which block's data to use, what kind of profing to do etc.  Hence, all the variables in this class
      are 'private', and the only interfaces are the functions.
-'''
+"""
 
 import re
 import threading
-from time import time
-from typing import List, Tuple, Union
 from binascii import hexlify
 from collections import Counter
+from time import time
+from typing import List, Union
 
-import mmh3 as mmh3
+import django.db.models as django_base_model
 from django.conf import settings
-from django.db.models import Model as django_base_model
 
-from . import QuerySignature, QueryProfiledData, QueryProfilerType, QuerySignatureStatistics
+import django_query_profiler.settings as django_query_profiler_settings
+import mmh3 as mmh3
+
+from . import (QueryProfiledData, QueryProfilerLevel, QuerySignature,
+               QuerySignatureStatistics)
 from .stack_tracer import find_stack_trace
 
 RE_NORMALIZE_REPEATED_PARAMS_PERCENT = re.compile(r'%s(, %s)+')
 
-'''
-This is needed just for making the tests happy.  We don't have a settings.py file, but we are using the client's file.
-Test cases don't like that we don't have a settings.py file, but we are trying to access settings in code
-'''
-if not settings.configured:
-    settings.configure()
+if not settings.configured:  # For tests
+    settings.configure(default_settings=django_query_profiler_settings)
 
 
 class QueryProfilerThreadLocalStorage(threading.local):
@@ -71,17 +70,17 @@ class QueryProfilerThreadLocalStorage(threading.local):
         self._query_profiler_enabled: bool = False
         self._query_profiled_data_list: List[QueryProfiledData] = []
         self._entry_index_stack: List[int] = []
-        self._query_profiler_type_stack: List[QueryProfilerType] = []
-        self._current_query_profiler_type: Union[QueryProfilerType, None] = None
+        self._query_profiler_type_stack: List[QueryProfilerLevel] = []
+        self._current_query_profiler_type: Union[QueryProfilerLevel, None] = None
 
     def reset(self) -> None:
         self.__init__()
 
-    def __repr__(self):
+    def __str__(self):
         return f'_query_profiler_enabled={self._query_profiler_enabled}, ' \
             f'query_profiled_data_list={self._query_profiled_data_list}, _entry_index_stack={self._entry_index_stack}'
 
-    def enter_profiler_mode(self, query_profiler_type: QueryProfilerType) -> None:
+    def enter_profiler_mode(self, query_profiler_type: QueryProfilerLevel) -> None:
         self._query_profiler_enabled = True
 
         # Put index to use in stack
@@ -112,8 +111,8 @@ class QueryProfilerThreadLocalStorage(threading.local):
         return combined_query_profiler_data
 
     def add_query_profiler_data(self, query_without_params: str, params: Union[list, str, None], target_db: str,
-                                query_execution_time_in_micros: int, db_row_count: int) -> None:
-        ''' This function adds to the bucket in the last index of the list, if the profiler is on '''
+                                query_execution_time_in_micros: int, db_row_count: Union[int, None]) -> None:
+        """ This function adds to the bucket in the last index of the list, if the profiler is on """
 
         if not self._query_profiler_enabled:
             return
@@ -125,8 +124,8 @@ class QueryProfilerThreadLocalStorage(threading.local):
             sql_normalized = query_without_params
 
         app_stack_trace, django_stack_trace = find_stack_trace(
-                app_module_names_to_exclude=_find_app_modules_to_exclude(),
-                django_module_names_to_include=tuple(django_base_model.__module__),
+                app_module_names_to_exclude=settings.DJANGO_QUERY_PROFILER_APPS_TO_REMOVE,
+                django_module_names_to_include=(django_base_model.__name__, ),
                 max_depth=self._current_query_profiler_type.stack_trace_depth)
 
         # New query_signature & query_signature_statistics instances
@@ -158,14 +157,3 @@ class QueryProfilerThreadLocalStorage(threading.local):
 # The public instance.  Using the fact that module level instances are singleton
 #######################################################################################################################
 query_profiler_thread_local_storage = QueryProfilerThreadLocalStorage()
-
-
-def _find_app_modules_to_exclude() -> Tuple[str]:
-    '''
-    This is a helper function to find app_modules_to_exclude parameter for finding stack-trace
-    If the user has not defined this property, we would put the default on our side.
-    '''
-    try:
-        return settings.QUERY_PROFILER_APPS_TO_REMOVE
-    except Exception:
-        return tuple(['django', 'IPython', 'django_query_profiler', 'test'])

@@ -5,22 +5,21 @@ headers, for the chrome plugin to display
 '''
 import json
 from time import time
-from typing import Union, Callable
+from typing import Callable, Union
 
 from django.conf import settings
 from django.urls import reverse
 
 import django_query_profiler.client.urls as query_profiler_url
-from django_query_profiler.chrome_plugin_helpers import ChromePluginData, redis_utils
-from django_query_profiler.query_signature import QueryProfiledData, QueryProfilerType
+import django_query_profiler.settings as django_query_profiler_settings
+from django_query_profiler.chrome_plugin_helpers import (ChromePluginData,
+                                                         redis_utils)
 from django_query_profiler.client.context_manager import QueryProfiler
+from django_query_profiler.query_signature import (QueryProfiledData,
+                                                   QueryProfilerLevel)
 
-'''
-This is needed just for making the tests happy.  We don't have a settings.py file, but we are using the client's file.
-Test cases don't like that we don't have a settings.py file, but we are trying to access settings in code
-'''
-if not settings.configured:
-    settings.configure()
+if not settings.configured:  # For tests
+    settings.configure(default_settings=django_query_profiler_settings)
 
 
 class QueryProfilerMiddleware:
@@ -30,7 +29,7 @@ class QueryProfilerMiddleware:
 
     def __call__(self, request):
         # Check if we have to enable query profiler or not.  And if we have to enable - what type of query profiler
-        query_profiler_type: Union[QueryProfilerType, None] = settings.QUERY_PROFILER_TYPE_FUNC(request)
+        query_profiler_type: Union[QueryProfilerLevel, None] = settings.DJANGO_QUERY_PROFILER_TYPE_FUNC(request)
         if not query_profiler_type:
             return self.get_response(request)
 

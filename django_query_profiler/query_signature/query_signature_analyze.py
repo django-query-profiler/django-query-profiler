@@ -1,22 +1,26 @@
-'''
+"""
 This module contains the function where we would want to "guess" if developer has missed a select_related
 or a prefetch_related.  This is more of an experimental thing and this can change with the version of
 django.
 
 We rely on stack-traces & query to see if we are able to predict what code changes are required
 to convert a N+1 query signature to a non N+1 one OR if its not possible at all
-'''
-from typing import Dict, Tuple, Callable
+"""
+
+from typing import Callable, Dict, Tuple
+
+from django.db.models.fields.related_descriptors import \
+    ForwardManyToOneDescriptor
+from django.db.models.query import QuerySet
 
 from moz_sql_parser import parse
-from django.db.models.query import QuerySet
-from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 
-from . import SqlStatement, QuerySignature, StackTraceElement, QuerySignatureAnalyzeResult
+from . import (QuerySignature, QuerySignatureAnalyzeResult, SqlStatement,
+               StackTraceElement)
 
 
 def stack_trace_element(func: Callable) -> StackTraceElement:
-    return StackTraceElement.djangoStackTraceElement(func.__module__, func.__name__)
+    return StackTraceElement.django_stacktrace_element(func.__module__, func.__name__)
 
 
 '''
@@ -72,20 +76,20 @@ def code_recommendation(query_signature: QuerySignature) -> QuerySignatureAnalyz
 
 
 def _parse_sql_for_tables_and_eq(query_without_params: str) -> Tuple[list, bool, str]:
-    '''
+    """
     This function parses the sql and returns a tuple of
     1. Table names as list
     2. Does where clause exists
-    3. table_name.column_name used in the where equality clause.  Only when equaility is the ONLY clause
+    3. table_name.column_name used in the where equality clause.  Only when equality is the ONLY clause
 
     NB:  1. This code looks ugly because the underlying library that we are using to parse returns a tree like structure
-            and there was no easy way to fetch the inforamtion we wanted.
+            and there was no easy way to fetch the information we wanted.
          2. Django's latest version has introduced sqlparse library as a requirement for using django.   We can explore
             that library in future, if that can make this code more readable
          3. The library is trying to write sql parser for a generic case, but there are many types of sql that django
             is never going to produce -- those are esoteric sql that probably only a human can write.
             See the test cases: https://github.com/mozilla/moz-sql-parser/tree/dev/tests to get an idea
-    '''
+    """
     query_with_fake_params = query_without_params.replace('%s', '1')
     parsed_sql: Dict = parse(query_with_fake_params)
 

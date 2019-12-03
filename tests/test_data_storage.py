@@ -1,9 +1,12 @@
+from collections import Counter
 from typing import Any
 from unittest import TestCase
-from collections import Counter
 
-from django_query_profiler.query_signature import SqlStatement, QueryProfilerType, QueryProfiledSummaryData
-from django_query_profiler.query_signature.data_storage import query_profiler_thread_local_storage
+from django_query_profiler.query_signature import (QueryProfiledSummaryData,
+                                                   QueryProfilerLevel,
+                                                   SqlStatement)
+from django_query_profiler.query_signature.data_storage import \
+    query_profiler_thread_local_storage
 
 
 class SqlStatementFromSqlTest(TestCase):
@@ -46,12 +49,12 @@ class SqlStatementFromSqlTest(TestCase):
 
 
 class DataStorageTest(TestCase):
-    '''
+    """
     Tests for checking if nesting in context manager works as expected.  Every nested block should return ONLY
     the data that happened since the start of the block.  These tests are for verifying this.
     In a way, this test is to make sure that the stack implementation of "query_profiler_thread_local_storage" works
     as it should
-    '''
+    """
 
     query_without_params = "SELECT 1 FROM table where id=%s"
     target_db = 'master'
@@ -66,15 +69,15 @@ class DataStorageTest(TestCase):
         self._assert_empty_storage()
 
     def test_enter_and_exit_with_no_queries(self):
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         query_profiled_data = query_profiler_thread_local_storage.exit_profiler_mode()
         self._assert_empty_storage()
         self.assertDictEqual(query_profiled_data.query_signature_to_query_signature_statistics, {})
         self.assertCountEqual(query_profiled_data._query_params_db_hash_counter, Counter())
 
     def test_one_query(self):
-        ''' When we have just one query executed'''
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        """ When we have just one query executed"""
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         self._add_query_to_storage([1, 2, 3])
         query_profiled_data = query_profiler_thread_local_storage.exit_profiler_mode()
         # Storage should be empty now
@@ -96,8 +99,8 @@ class DataStorageTest(TestCase):
         self.assertDictEqual(query_profiled_data.summary.as_dict(), summary_data_expected_dict)
 
     def test_two_query_signatures(self):
-        ''' We have two queries each with different query signatures '''
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        """ We have two queries each with different query signatures """
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         self._add_query_to_storage((1,))
         self._add_query_to_storage((1,))
         query_profiled_data = query_profiler_thread_local_storage.exit_profiler_mode()
@@ -117,8 +120,8 @@ class DataStorageTest(TestCase):
         self.assertEqual(len(query_profiled_data.query_signature_to_query_signature_statistics), 1)
 
     def test_two_queries_same_query_signature(self):
-        ''' We  have two queries, and both of them have the same query signature.  We do this by using a loop'''
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        """ We  have two queries, and both of them have the same query signature.  We do this by using a loop"""
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         for _ in range(2):
             self._add_query_to_storage((1,))
         query_profiled_data = query_profiler_thread_local_storage.exit_profiler_mode()
@@ -138,7 +141,7 @@ class DataStorageTest(TestCase):
         self.assertEqual(len(query_profiled_data.query_signature_to_query_signature_statistics), 1)
 
     def test_simple_nested_entry_exit_calls(self):
-        '''  This is a simulation when it is called from a context manager.  The exit function should return ONLY the
+        """  This is a simulation when it is called from a context manager.  The exit function should return ONLY the
             query profiled data for calls that happened from innermost start
 
             This is the order of entry-exit in the context manager:
@@ -149,10 +152,10 @@ class DataStorageTest(TestCase):
                 exit -- This should return 2 queries data
             exit -- This should return all queries data
 
-        '''
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        """
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         self._add_query_to_storage((1,))
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         self._add_query_to_storage((1,))
         self._add_query_to_storage((1,))
 
@@ -183,7 +186,7 @@ class DataStorageTest(TestCase):
         self.assertEqual(second_exit_query_profiled_data.summary, expected_query_profiled_summary_data)
 
     def test_complex_nested_entry_exit_calls(self):
-        '''
+        """
         This is the order of entry-exit in the context manager:
         entry
             1 sql
@@ -199,13 +202,13 @@ class DataStorageTest(TestCase):
             exit --> should return 2 queries data
         exit --> should return all queries data
 
-        '''
+        """
 
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         self._add_query_to_storage((1,))
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         self._add_query_to_storage((1,))
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
 
         # Before first exit
         self.assertEqual(len(query_profiler_thread_local_storage._query_profiled_data_list), 3)
@@ -225,7 +228,7 @@ class DataStorageTest(TestCase):
             potential_n_plus1_query_count=0)
         self.assertEqual(first_exit_query_profiled_data.summary, expected_query_profiled_summary_data)
 
-        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerType.QUERY_SIGNATURE)
+        query_profiler_thread_local_storage.enter_profiler_mode(QueryProfilerLevel.QUERY_SIGNATURE)
         self._add_query_to_storage((1,))
 
         # Before second exit
@@ -286,17 +289,17 @@ class DataStorageTest(TestCase):
     # ##################################################################################################################
 
     def _assert_empty_storage(self) -> None:
-        ''' This is a helper function for checking if thread local storage is all empty or not'''
+        """ This is a helper function for checking if thread local storage is all empty or not"""
         self.assertFalse(query_profiler_thread_local_storage._query_profiler_enabled)
         self.assertListEqual(query_profiler_thread_local_storage._query_profiled_data_list, [])
         self.assertListEqual(query_profiler_thread_local_storage._entry_index_stack, [])
 
     def _add_query_to_storage(self, params: Any) -> None:
-        '''
+        """
         This function adds one query to the thread local storage.  Note that the stack trace is calculated
         by the function query_profiler_thread_local_storage#add_query_profiler_data, and hence if we are
         calling this function from different line numbers - they would have a different stack trace
-        '''
+        """
         query_profiler_thread_local_storage.add_query_profiler_data(
             query_without_params=self.query_without_params,
             params=params,

@@ -25,18 +25,18 @@ class QueryProfilerCursorWrapper(CursorWrapper):
 
 
 class QueryProfilerCursorDebugWrapper(QueryProfilerCursorWrapper, CursorDebugWrapper):
-    '''
+    """
     The code for this is exactly the same as QueryProfilerCursorWrapper, except the base class would be
     CursorDebugWrapper.  Seems like a perfect use case of multiple inheritance
     See https://rhettinger.wordpress.com/2011/05/26/super-considered-super/ if this looks confusing
-    '''
+    """
     pass
 
 
 def _helper(query_profiler_cursor_wrapper: CursorWrapper, base_class_func: Callable, sql: str, params: Any):
-    '''
+    """
     This function calls invokes the "do something/nothing" with all the parameters
-    '''
+    """
     start_time = time()
     try:
         output = base_class_func(sql, params)

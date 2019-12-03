@@ -10,7 +10,7 @@ from django_query_profiler.query_signature.data_storage import \
 
 
 class SqlStatementFromSqlTest(TestCase):
-    ''' Tests for checking if we are able to derive the correct sql starement type, from a sql statement '''
+    """ Tests for checking if we are able to derive the correct sql statement type, from a sql statement """
 
     def test_select(self):
         query = "SELECT * FROM table"

@@ -1,8 +1,8 @@
-'''
+"""
 This module contains the middleware that can be applied to any request, to enable query profiler.
 It internally calls context manager, and has the same output as the context manager.  It just adds some response
 headers, for the chrome plugin to display
-'''
+"""
 import json
 from time import time
 from typing import Callable, Union

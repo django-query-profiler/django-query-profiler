@@ -1,7 +1,7 @@
-'''
-This module contains both functiions of setting and getting from redis
+"""
+This module contains both functions of setting and getting from redis
 Redis is used for storing the pickled query profiled data, and later to retrieve it back
-'''
+"""
 import pickle
 import uuid
 

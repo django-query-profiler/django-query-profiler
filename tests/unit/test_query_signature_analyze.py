@@ -3,8 +3,7 @@ from unittest import TestCase
 from django_query_profiler.query_signature import (QuerySignature,
                                                    QuerySignatureAnalyzeResult,
                                                    StackTraceElement)
-from django_query_profiler.query_signature.query_signature_analyze import \
-    _parse_sql_for_tables_and_eq
+from django_query_profiler.query_signature.query_signature_analyze import _parse_sql_for_tables_and_eq
 
 
 class QuerySignatureAnalyzeTest(TestCase):

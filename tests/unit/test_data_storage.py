@@ -5,8 +5,7 @@ from unittest import TestCase
 from django_query_profiler.query_signature import (QueryProfiledSummaryData,
                                                    QueryProfilerLevel,
                                                    SqlStatement)
-from django_query_profiler.query_signature.data_storage import \
-    query_profiler_thread_local_storage
+from django_query_profiler.query_signature.data_storage import query_profiler_thread_local_storage
 
 
 class SqlStatementFromSqlTest(TestCase):

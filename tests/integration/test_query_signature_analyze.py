@@ -1,8 +1,10 @@
 from django.db.models import Prefetch
 from django.test import TestCase
+
 from django_query_profiler.client.context_manager import QueryProfiler
-from django_query_profiler.query_signature import QuerySignatureAnalyzeResult, QueryProfilerLevel
-from tests.integration.models import Pizza, Restaurant, Topping
+from django_query_profiler.query_signature import (QueryProfilerLevel,
+                                                   QuerySignatureAnalyzeResult)
+from tests.integration.setup.models import Pizza, Restaurant, Topping
 
 
 class QueryProfilerCodeSuggestions(TestCase):
@@ -56,7 +58,7 @@ class QueryProfilerCodeSuggestions(TestCase):
                                                        QuerySignatureAnalyzeResult.PREFETCHED_RELATED})
 
     def test_spicy_toppings_db_filtering(self):
-        ''' Test to verify that no amount of prefetching would help if we do db filtering'''
+        """ Test to verify that no amount of prefetching would help if we do db filtering"""
 
         # STEP 1: Without any prefetching
         pizzas = Pizza.objects.all()
@@ -102,7 +104,7 @@ class QueryProfilerCodeSuggestions(TestCase):
                                                        QuerySignatureAnalyzeResult.UNKNOWN})
 
     def test_spicy_toppings_python_filtering(self):
-        ''' Test to verify that if filtering is done in python, we have a chance to optimize '''
+        """ Test to verify that if filtering is done in python, we have a chance to optimize """
 
         # STEP 1: Without any prefetching
         pizzas = Pizza.objects.all()
@@ -147,10 +149,10 @@ class QueryProfilerCodeSuggestions(TestCase):
                                                        QuerySignatureAnalyzeResult.PREFETCHED_RELATED})
 
     def test_missing_select_related(self):
-        '''
+        """
         This function tests various select_related and prefetch_related on the function
         food.models.py#toppings_of_best_pizza_serving_restaurants
-        '''
+        """
 
         # STEP 1:  No select_related/prefetch_related
         pizza = Pizza.objects.first()
@@ -208,11 +210,6 @@ class QueryProfilerCodeSuggestions(TestCase):
 
         # STEP 4: Now Adding the prefetch_related to toppings as well
         # FIXME(Yash)  How to do prefetch on the best_pizza
-
-
-# ##################################################################
-# Helpers
-# ##################################################################
 
 
 def _helper_bulk_create_toppings_pizzas_restaurants() -> None:

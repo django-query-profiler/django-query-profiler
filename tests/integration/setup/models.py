@@ -35,7 +35,6 @@ class Pizza(models.Model):
         This function filters out spicy toppings in python.  This is an example of a function that can be optimized
         because it allows the programmer to do prefetch_related.  If we miss to do prefetch related, the code
         recommendation would show it as apply prefetch related
-        This function can benefit from using
         """
         return [topping for topping in self.toppings.all() if topping.is_spicy]
 

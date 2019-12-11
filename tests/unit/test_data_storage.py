@@ -5,46 +5,8 @@ from unittest import TestCase
 from django_query_profiler.query_signature import (QueryProfiledSummaryData,
                                                    QueryProfilerLevel,
                                                    SqlStatement)
-from django_query_profiler.query_signature.data_storage import query_profiler_thread_local_storage
-
-
-class SqlStatementFromSqlTest(TestCase):
-    """ Tests for checking if we are able to derive the correct sql statement type, from a sql statement """
-
-    def test_select(self):
-        query = "SELECT * FROM table"
-        sql_statement = SqlStatement.from_sql(query)
-        self.assertEqual(sql_statement, SqlStatement.SELECT)
-
-    def test_insert(self):
-        query = "INSERT INTO table values(1, 2)"
-        sql_statement = SqlStatement.from_sql(query)
-        self.assertEqual(sql_statement, SqlStatement.INSERT)
-
-    def test_update(self):
-        query = "update table set a=1 WHERE id=5"
-        sql_statement = SqlStatement.from_sql(query)
-        self.assertEqual(sql_statement, SqlStatement.UPDATE)
-
-    def test_delete(self):
-        query = "DELEte FROM table WHERE id=5"
-        sql_statement = SqlStatement.from_sql(query)
-        self.assertEqual(sql_statement, SqlStatement.DELETE)
-
-    def test_begin(self):
-        query = "BEGIN"
-        sql_statement = SqlStatement.from_sql(query)
-        self.assertEqual(sql_statement, SqlStatement.TRANSACTIONALS)
-
-    def test_end(self):
-        query = "END"
-        sql_statement = SqlStatement.from_sql(query)
-        self.assertEqual(sql_statement, SqlStatement.TRANSACTIONALS)
-
-    def test_other(self):
-        query = "END2"
-        sql_statement = SqlStatement.from_sql(query)
-        self.assertEqual(sql_statement, SqlStatement.OTHER)
+from django_query_profiler.query_signature.data_storage import \
+    query_profiler_thread_local_storage
 
 
 class DataStorageTest(TestCase):
@@ -282,10 +244,6 @@ class DataStorageTest(TestCase):
             total_db_row_count=self.db_row_count * 3,
             potential_n_plus1_query_count=3)
         self.assertEqual(fourth_exit_query_profiled_data.summary, expected_query_profiled_summary_data)
-
-    # ##################################################################################################################
-    # Helpers
-    # ##################################################################################################################
 
     def _assert_empty_storage(self) -> None:
         """ This is a helper function for checking if thread local storage is all empty or not"""

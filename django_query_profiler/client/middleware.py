@@ -11,15 +11,11 @@ from django.conf import settings
 from django.urls import reverse
 
 import django_query_profiler.client.urls as query_profiler_url
-import django_query_profiler.settings as django_query_profiler_settings
 from django_query_profiler.chrome_plugin_helpers import (ChromePluginData,
                                                          redis_utils)
 from django_query_profiler.client.context_manager import QueryProfiler
 from django_query_profiler.query_signature import (QueryProfiledData,
                                                    QueryProfilerLevel)
-
-if not settings.configured:  # For tests
-    settings.configure(default_settings=django_query_profiler_settings)
 
 
 class QueryProfilerMiddleware:

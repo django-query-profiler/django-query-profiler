@@ -51,7 +51,6 @@ from typing import List, Union
 import django.db.models as django_base_model
 from django.conf import settings
 
-import django_query_profiler.settings as django_query_profiler_settings
 import mmh3 as mmh3
 
 from . import (QueryProfiledData, QueryProfilerLevel, QuerySignature,
@@ -59,9 +58,6 @@ from . import (QueryProfiledData, QueryProfilerLevel, QuerySignature,
 from .stack_tracer import find_stack_trace
 
 RE_NORMALIZE_REPEATED_PARAMS_PERCENT = re.compile(r'%s(, %s)+')
-
-if not settings.configured:  # For tests
-    settings.configure(default_settings=django_query_profiler_settings)
 
 
 class QueryProfilerThreadLocalStorage(threading.local):

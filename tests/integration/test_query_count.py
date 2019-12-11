@@ -1,9 +1,11 @@
 from typing import Dict
 
 from django.test import TestCase
+
 from django_query_profiler.client.context_manager import QueryProfiler
-from django_query_profiler.query_signature import SqlStatement, QueryProfilerLevel
-from tests.integration.models import Topping
+from django_query_profiler.query_signature import (QueryProfilerLevel,
+                                                   SqlStatement)
+from tests.integration.setup.models import Topping
 
 
 class QueryCountTest(TestCase):

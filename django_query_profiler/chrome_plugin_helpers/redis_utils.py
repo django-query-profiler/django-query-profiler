@@ -8,11 +8,7 @@ import uuid
 import redis
 from django.conf import settings
 
-import django_query_profiler.settings as django_query_profiler_settings
 from django_query_profiler.query_signature import QueryProfiledData
-
-if not settings.configured:  # For tests
-    settings.configure(default_settings=django_query_profiler_settings)
 
 REDIS_INSTANCE = redis.StrictRedis(
     host=settings.DJANGO_QUERY_PROFILER_REDIS_HOST,

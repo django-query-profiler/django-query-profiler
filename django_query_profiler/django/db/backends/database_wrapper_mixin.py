@@ -9,8 +9,7 @@ from typing import Union
 from django.db.backends.base.base import BaseDatabaseWrapper
 from django.db.backends.utils import CursorDebugWrapper, CursorWrapper
 
-from .cursor_wrapper_instrumentation import (QueryProfilerCursorDebugWrapper,
-                                             QueryProfilerCursorWrapper)
+from .cursor_wrapper_instrumentation import QueryProfilerCursorDebugWrapper, QueryProfilerCursorWrapper
 
 
 class QueryProfilerDatabaseWrapperMixin(BaseDatabaseWrapper, ABC):

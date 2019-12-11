@@ -11,11 +11,9 @@ from django.conf import settings
 from django.urls import reverse
 
 import django_query_profiler.client.urls as query_profiler_url
-from django_query_profiler.chrome_plugin_helpers import (ChromePluginData,
-                                                         redis_utils)
+from django_query_profiler.chrome_plugin_helpers import ChromePluginData, redis_utils
 from django_query_profiler.client.context_manager import QueryProfiler
-from django_query_profiler.query_signature import (QueryProfiledData,
-                                                   QueryProfilerLevel)
+from django_query_profiler.query_signature import QueryProfiledData, QueryProfilerLevel
 
 
 class QueryProfilerMiddleware:

@@ -9,14 +9,12 @@ to convert a N+1 query signature to a non N+1 one OR if its not possible at all
 
 from typing import Callable, Dict, Tuple
 
-from django.db.models.fields.related_descriptors import \
-    ForwardManyToOneDescriptor
+from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 from django.db.models.query import QuerySet
 
 from moz_sql_parser import parse
 
-from . import (QuerySignature, QuerySignatureAnalyzeResult, SqlStatement,
-               StackTraceElement)
+from . import QuerySignature, QuerySignatureAnalyzeResult, SqlStatement, StackTraceElement
 
 
 def stack_trace_element(func: Callable) -> StackTraceElement:

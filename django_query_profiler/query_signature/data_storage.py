@@ -53,8 +53,7 @@ from django.conf import settings
 
 import mmh3 as mmh3
 
-from . import (QueryProfiledData, QueryProfilerLevel, QuerySignature,
-               QuerySignatureStatistics)
+from . import QueryProfiledData, QueryProfilerLevel, QuerySignature, QuerySignatureStatistics
 from .stack_tracer import find_stack_trace
 
 RE_NORMALIZE_REPEATED_PARAMS_PERCENT = re.compile(r'%s(, %s)+')

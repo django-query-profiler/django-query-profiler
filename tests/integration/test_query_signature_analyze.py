@@ -2,8 +2,7 @@ from django.db.models import Prefetch
 from django.test import TestCase
 
 from django_query_profiler.client.context_manager import QueryProfiler
-from django_query_profiler.query_signature import (QueryProfilerLevel,
-                                                   QuerySignatureAnalyzeResult)
+from django_query_profiler.query_signature import QueryProfilerLevel, QuerySignatureAnalyzeResult
 from tests.integration.setup.models import Pizza, Restaurant, Topping
 
 

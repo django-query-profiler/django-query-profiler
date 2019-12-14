@@ -10,3 +10,4 @@ eggs/
 build/
 develop-eggs/
 dist/
+/.tox/

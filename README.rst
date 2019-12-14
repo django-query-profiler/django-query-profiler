@@ -2,6 +2,14 @@
 Django Query Profiler
 ======================
 
+.. image:: https://img.shields.io/pypi/l/django.svg
+   :target: https://raw.githubusercontent.com/django-query-profiler/django-query-profiler/master/LICENSE?token=AN2LDYBKJNBDZZC3ZCNAJHK56RD2I
+
+.. image:: https://travis-ci.com/django-query-profiler/django-query-profiler.svg?token=fxUKyqwxKVZEiBwbsjxt&branch=master
+    :target: https://travis-ci.com/django-query-profiler/django-query-profiler
+
+
+
 This project implements a query profiler for django projects. It integrates with any django project, and show all the
 queries that an application makes.
 

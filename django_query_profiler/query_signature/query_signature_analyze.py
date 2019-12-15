@@ -11,7 +11,6 @@ from typing import Callable, Dict, Tuple
 
 from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 from django.db.models.query import QuerySet
-
 from moz_sql_parser import parse
 
 from . import QuerySignature, QuerySignatureAnalyzeResult, SqlStatement, StackTraceElement

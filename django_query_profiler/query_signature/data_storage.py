@@ -49,9 +49,8 @@ from time import time
 from typing import List, Union
 
 import django.db.models as django_base_model
-from django.conf import settings
-
 import mmh3 as mmh3
+from django.conf import settings
 
 from . import QueryProfiledData, QueryProfilerLevel, QuerySignature, QuerySignatureStatistics
 from .stack_tracer import find_stack_trace

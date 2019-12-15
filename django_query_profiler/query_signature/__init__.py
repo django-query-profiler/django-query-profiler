@@ -6,7 +6,6 @@ __add__, __radd__ etc, which help us in keeping the logic in one place - inside 
 As an example, see "QuerySignatureStatistics __add__(self, other) function, where by defining this function, the object
 becomes additive -- which is what it should be.
 """
-from __future__ import annotations
 
 import json
 import operator
@@ -32,7 +31,7 @@ class StackTraceElement:
         return f'{self.module_name.replace(".", "/")}.py#{self.line_number} {self.function_name}()'
 
     @staticmethod
-    def django_stacktrace_element(module_name, function_name) -> StackTraceElement:
+    def django_stacktrace_element(module_name, function_name):  # -> StackTraceElement:
         """
         We are passing None for line_number.  This is important because when we want to compare django stack-traces,
         we want two stack-traces which have the same (module_name, function_name) combination to be same
@@ -40,7 +39,7 @@ class StackTraceElement:
         return StackTraceElement(module_name=module_name, function_name=function_name)
 
     @staticmethod
-    def app_stacktrace_element(module_name, function_name, line_number) -> StackTraceElement:
+    def app_stacktrace_element(module_name, function_name, line_number):  # -> StackTraceElement:
         return StackTraceElement(module_name=module_name, function_name=function_name, line_number=line_number)
 
 
@@ -89,7 +88,7 @@ class QuerySignatureStatistics:
     query_execution_time_in_micros: int
     db_row_count: Union[int, None]
 
-    def __add__(self, other) -> QuerySignatureStatistics:
+    def __add__(self, other):  # -> QuerySignatureStatistics:
         """
         Python magic function to make one QuerySignatureStatistics object ability to be added to another
         """
@@ -113,7 +112,7 @@ class SqlStatement(Enum):
         self.statements = statements
 
     @staticmethod
-    def from_sql(query_without_params: str) -> SqlStatement:
+    def from_sql(query_without_params: str):  # -> SqlStatement:
         sql_statement_str = RE_STATEMENT_NAME.search(query_without_params).groups()[0].upper()
         for sql_statement in SqlStatement:
             if sql_statement_str in sql_statement.statements:
@@ -184,7 +183,7 @@ class QueryProfiledData:
             total_db_row_count=total_db_row_count,
             potential_n_plus1_query_count=None if is_any_query_signature_fake else potential_n_plus1_query_count)
 
-    def __add__(self, other) -> QueryProfiledData:
+    def __add__(self, other):  # -> QueryProfiledData:
         """
         This class is not a very obvious choice of additive object.  But, the ability to add instances of this class
         makes sense when we think what this class represent - its the output of profiling query in a context manager
@@ -203,7 +202,7 @@ class QueryProfiledData:
             time_spent_profiling_in_micros=combined_profiling_time,
             query_signature_to_query_signature_statistics=combined_query_signature_to_query_signature_statistics)
 
-    def __radd__(self, other) -> QueryProfiledData:
+    def __radd__(self, other):  # -> QueryProfiledData:
         """
         This is needed for using sum() function to sum up a list of instances.
         See http://www.marinamele.com/2014/04/modifying-add-method-of-python-class.html for more details
@@ -219,7 +218,7 @@ class QueryProfilerLevel(Enum):
         self.stack_trace_depth = stack_trace_depth
         self.normalize_sql = normalize_sql
 
-    def __add__(self, other) -> QueryProfilerLevel:
+    def __add__(self, other):  # -> QueryProfilerLevel:
         """
         One other example where its not obvious why we would like to add, though in this case we don't have a very good
         reason.
@@ -233,7 +232,7 @@ class QueryProfilerLevel(Enum):
         else:
             return QueryProfilerLevel.QUERY
 
-    def __radd__(self, other) -> QueryProfilerLevel:
+    def __radd__(self, other):  # -> QueryProfilerLevel:
         """
         This is needed for using sum() function to sum up a list of instances.
         See http://www.marinamele.com/2014/04/modifying-add-method-of-python-class.html for more details

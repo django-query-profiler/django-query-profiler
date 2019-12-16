@@ -11,3 +11,4 @@ build/
 develop-eggs/
 dist/
 /.tox/
+/.coverage

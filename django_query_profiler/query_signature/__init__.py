@@ -240,9 +240,6 @@ class QueryProfilerLevel(Enum):
         return self if other == 0 else self.__add__(other)
 
 
-# #####################################################################################################################
-# Helpers
-# #####################################################################################################################
 def merge_dicts(first_dict: Dict, second_dict: Dict, op: Callable) -> OrderedDict:
     return OrderedDict(list(first_dict.items()) + list(second_dict.items()) +
                        [(key, op(first_dict[key], second_dict[key])) for key in set(second_dict) & set(first_dict)])

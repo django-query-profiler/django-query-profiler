@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 INSTALLED_APPS = (
     'django_query_profiler',
-    'tests.integration.setup',
+    'tests.testapp',
 )
 
 SECRET_KEY = 'dummy'

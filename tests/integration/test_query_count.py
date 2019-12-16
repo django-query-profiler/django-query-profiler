@@ -5,7 +5,7 @@ from django.test import TestCase
 from django_query_profiler.client.context_manager import QueryProfiler
 from django_query_profiler.query_signature import QueryProfilerLevel, SqlStatement
 
-from .setup.models import Topping
+from ..testapp.models import Topping
 
 
 class QueryCountTest(TestCase):

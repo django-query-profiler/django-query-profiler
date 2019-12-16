@@ -10,7 +10,7 @@ from django.test.utils import get_runner
 
 
 def run_tests():
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.integration.setup.test_settings'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.testapp.test_settings'
     django.setup()
     test_runner_class: Type[DiscoverRunner] = get_runner(settings)
     test_runner_instance: DiscoverRunner = test_runner_class(verbosity=2)

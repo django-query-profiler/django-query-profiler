@@ -5,8 +5,3 @@ python :
   - "3.6"
 install: pip install tox-travis
 script : tox
-
-
-DATABASE_NAME = 'test_db'
-DATABASE_USER = 'postgres'
-DATABASE_PASSWORD = ''

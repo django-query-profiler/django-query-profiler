@@ -15,7 +15,7 @@ SECRET_KEY = 'dummy'
 DATABASES = {
     'default': {
         'ENGINE': 'django_query_profiler.django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'travis_ci_test',
         'USER': 'travis',
     }
 }

@@ -15,7 +15,7 @@ SECRET_KEY = 'dummy'
 DATABASES = {
     'default': {
         'ENGINE': 'django_query_profiler.django.db.backends.postgresql',
-        'NAME': 'test_db',
+        'NAME': 'travis_ci_test',
         'USER': 'postgres',
         'PASSWORD': '',
     }

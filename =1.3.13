@@ -1,0 +1,6 @@
+Collecting mysqlclient
+  Downloading https://files.pythonhosted.org/packages/d0/97/7326248ac8d5049968bf4ec708a5d3d4806e412a42e74160d7f266a3e03a/mysqlclient-1.4.6.tar.gz (85kB)
+Installing collected packages: mysqlclient
+    Running setup.py install for mysqlclient: started
+    Running setup.py install for mysqlclient: finished with status 'done'
+Successfully installed mysqlclient-1.4.6

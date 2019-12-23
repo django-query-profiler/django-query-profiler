@@ -17,11 +17,6 @@ def index(request: WSGIRequest) -> HttpResponse:
     [pizza.spicy_toppings_python_filtering() for pizza in Pizza.objects.prefetch_related('toppings').all()]
     [pizza.toppings_of_best_pizza_serving_restaurants() for pizza in Pizza.objects.prefetch_related('toppings').all()]
 
-    # Bulk updating Pizzas
-    for pizza in pizzas:
-        pizza.is_vegetarian = False
-    Pizza.objects.bulk_update(pizzas, ['is_vegetarian'])
-
     list(Restaurant.objects.all())
 
     return HttpResponse("Made all the db calls, now test the calls made via profiler")

@@ -11,6 +11,7 @@ INSTALLED_APPS = (
 )
 
 SECRET_KEY = 'dummy'
+ROOT_URLCONF = 'tests.testapp.urls'
 
 DATABASES = {
     'default': {
@@ -20,3 +21,8 @@ DATABASES = {
         'PASSWORD': '',
     }
 }
+
+MIDDLEWARE = [
+    # __ADDED FOR DJANGO QUERY PROFILER __
+    'django_query_profiler.client.middleware.QueryProfilerMiddleware',
+]

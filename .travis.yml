@@ -3,12 +3,18 @@ python :
   - "3.8"
   - "3.7"
   - "3.6"
-install: pip install tox-travis
-script : tox
+install: pip install tox-travis coveralls
+script :
+  tox
+
 services:
   - mysql
   - postgresql
 
 before_script:
+  - coverage erase
   - psql -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test character set utf8 collate utf8_general_ci;'
+
+after_success:
+  - coveralls

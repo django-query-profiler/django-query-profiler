@@ -8,6 +8,9 @@ Django Query Profiler
 .. image:: https://travis-ci.com/django-query-profiler/django-query-profiler.svg?token=fxUKyqwxKVZEiBwbsjxt&branch=master
     :target: https://travis-ci.com/django-query-profiler/django-query-profiler
 
+.. image:: https://codecov.io/gh/django-query-profiler/django-query-profiler/branch/master/graph/badge.svg?token=1Cv7WsOi2W
+  :target: https://codecov.io/gh/django-query-profiler/django-query-profiler
+
 
 
 This project implements a query profiler for django projects. It integrates with any django project, and show all the

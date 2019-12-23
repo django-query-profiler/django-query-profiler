@@ -9,16 +9,6 @@ from django.test.runner import DiscoverRunner
 from django.test.utils import get_runner
 
 
-def _unit_tests(test_runner_instance: DiscoverRunner) -> int:
-    failure_count = test_runner_instance.run_tests(['tests/unit'])
-    return failure_count
-
-
-def _integration_test(test_runner_instance: DiscoverRunner) -> int:
-    failure_count = test_runner_instance.run_tests(['tests/integration'])
-    return failure_count
-
-
 def run_tests():
     """
     This is the main function that calls all the tests.  It expects that the DJANGO_SETTINGS_MODULE would be set
@@ -30,9 +20,7 @@ def run_tests():
     test_runner_class: Type[DiscoverRunner] = get_runner(settings)
     test_runner_instance: DiscoverRunner = test_runner_class(verbosity=2)
 
-    integration_test_failure_count = _integration_test(test_runner_instance)
-    unit_test_failure_count = _unit_tests(test_runner_instance)
-    sys.exit(integration_test_failure_count + unit_test_failure_count)
+    sys.exit(bool(test_runner_instance.run_tests(["tests"])))
 
 
 if __name__ == "__main__":

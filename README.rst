@@ -134,6 +134,6 @@ The idea to have two levels of the profiler is to allow for the user to decide o
 For contributors
 ================
 
-The Django Debug Toolbar is released under the BSD license, like Django itself. If you like it, please consider contributing!
+The django query profiler is released under the BSD license, like Django itself. If you like it, please consider contributing!
 We have written about the inner workings of the package, and how code is organized in the
 :doc: INTERNALS.md file

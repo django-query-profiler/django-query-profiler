@@ -19,9 +19,3 @@ before_script:
 
 after_success:
   - codecov --token=b8658151-c206-4968-8632-f2770143110e
-
-[testenv]
-passenv =
-  CI
-  TRAVIS
-  TRAVIS_*

@@ -8,7 +8,7 @@ from django.test import TestCase, override_settings
 from tests.testapp.models import Topping
 
 from django_query_profiler.chrome_plugin_helpers import ChromePluginData, redis_utils
-from django_query_profiler.client.middleware import DETAILED_VIEW_EXCEPTION_URL, DETAILED_VIEW_EXCEPTION_LINK_TEXT
+from django_query_profiler.client.middleware import DETAILED_VIEW_EXCEPTION_LINK_TEXT, DETAILED_VIEW_EXCEPTION_URL
 from django_query_profiler.query_signature import QueryProfilerLevel, SqlStatement
 
 

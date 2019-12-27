@@ -8,7 +8,7 @@ from django.test import TestCase, override_settings
 from tests.testapp.models import Topping
 
 from django_query_profiler.chrome_plugin_helpers import ChromePluginData, redis_utils
-from django_query_profiler.client.middleware import DETAILED_VIEW_EXCEPTION_URL
+from django_query_profiler.client.middleware import DETAILED_VIEW_EXCEPTION_URL, DETAILED_VIEW_EXCEPTION_LINK_TEXT
 from django_query_profiler.query_signature import QueryProfilerLevel, SqlStatement
 
 
@@ -56,7 +56,7 @@ class QueryProfilerMiddlewareTest(TestCase):
         response: HttpResponse = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get(ChromePluginData.QUERY_PROFILER_DETAILED_VIEW_LINK_TEXT),
-                         QueryProfilerLevel.QUERY_SIGNATURE.name.lower())
+                         DETAILED_VIEW_EXCEPTION_LINK_TEXT)
 
         url_pattern = DETAILED_VIEW_EXCEPTION_URL
         detailed_url = response.get(ChromePluginData.QUERY_PROFILED_DETAILED_URL)

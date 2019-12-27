@@ -11,7 +11,7 @@ from django_query_profiler.query_signature.data_storage import query_profiler_th
 
 class QueryProfiler:
 
-    def __init__(self, query_profiler_level, clear_thread_local: bool = False):
+    def __init__(self, query_profiler_level: QueryProfilerLevel, clear_thread_local: bool = False):
         if clear_thread_local:
             query_profiler_thread_local_storage.reset()
 

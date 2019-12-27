@@ -78,7 +78,7 @@ Getting It
 Installing It
 =============
 
-To enable `django_query_profiler` in your project you need to make a couple of changes in the application
+To enable `django-query-profiler` in your project you need to make a couple of changes in the application
 settings.py and urls.py files:
 
 1. **settings.py**::

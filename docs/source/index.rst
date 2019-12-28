@@ -17,18 +17,23 @@ Getting Started
 
 TODO(Yash) Add a description copying from the blog and the image.
 
-Getting It
-==========
+Installing It
+=============
 
-1. Simplest way to install is to use pip, and installing chromium extension from chrome store:
+1. Simplest way to get the profiler is to use pip, and installing chromium extension from chrome store:
 
   i. Python package::
 
       $ pip install django-query-profiler
 
-  ii. Chrome extension::
+  ii. Chromium extension::
 
         https://www.google.com
+
+You can verify that the application is available on your PYTHONPATH by opening a python interpreter and entering the following commands::
+
+  >>> import django_query_profiler
+  >>> django_extensions.VERSION
 
 2. If you want to install it from source:
 
@@ -46,14 +51,19 @@ Getting It
          - click on load unpacked.
          - Select the cloned package above
 
-Installing It
-=============
+Configuring in your application
+===============================
+
+Please follow this link :doc:`configuration_instructions`. Enjoy.
 
 
+Contents
+========
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+
+   configuration_instructions
 
 
 

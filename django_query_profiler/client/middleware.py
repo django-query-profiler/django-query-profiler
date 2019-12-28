@@ -4,7 +4,6 @@ It internally calls context manager, and has the same output as the context mana
 headers, for the chrome plugin to display
 """
 import json
-import traceback
 from time import time
 from typing import Callable, Union
 
@@ -48,7 +47,6 @@ class QueryProfilerMiddleware:
             query_profiled_detail_absolute_url: str = request.build_absolute_uri(query_profiled_detail_relative_url)
             detailed_view_link_text: str = query_profiler_level.name.lower()
         except Exception as ex:
-            traceback.print_exc()
             # The exception can happen because of two reasons:
             # 1. redis throws exception
             # 2. detailed_view_url not setup in urls.py

@@ -118,7 +118,7 @@ class QueryProfilerThreadLocalStorage(threading.local):
             sql_normalized = query_without_params
 
         app_stack_trace, django_stack_trace = find_stack_trace(
-                app_module_names_to_exclude=settings.DJANGO_QUERY_PROFILER_APPS_MODULES_TO_REMOVE,
+                app_module_names_to_exclude=settings.DJANGO_QUERY_PROFILER_APPS_MODULES_EXCLUSION_LIST,
                 django_module_names_to_include=(django_base_model.__name__, ),
                 max_depth=self._current_query_profiler_level.stack_trace_depth)
 

@@ -19,7 +19,6 @@ def run_tests():
 
     test_runner_class: Type[DiscoverRunner] = get_runner(settings)
     test_runner_instance: DiscoverRunner = test_runner_class(verbosity=2)
-
     sys.exit(bool(test_runner_instance.run_tests(["tests"])))
 
 

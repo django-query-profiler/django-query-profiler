@@ -18,18 +18,9 @@ class QueryProfiler:
         self.query_profiled_data: Union[QueryProfiledData, None] = None
         self.query_profiler_level: QueryProfilerLevel = query_profiler_level
 
-    def __enter__(self):
+    def __enter__(self) -> 'QueryProfiler':
         query_profiler_thread_local_storage.enter_profiler_mode(self.query_profiler_level)
         return self
 
     def __exit__(self, *_) -> None:
         self.query_profiled_data = query_profiler_thread_local_storage.exit_profiler_mode()
-
-    def __call__(self, func):
-        @wraps(func)
-        def decorator(*args, **kwargs):
-            with self:
-                output = func(*args, **kwargs)
-            print(self.query_profiled_data.summary)
-            return output
-        return decorator

@@ -19,7 +19,7 @@ REDIS_INSTANCE = redis.StrictRedis(
 def store_data(query_profiled_data: QueryProfiledData) -> str:
     pickled_query_profiled_data = pickle.dumps(query_profiled_data)
     redis_key = str(uuid.uuid4().hex)
-    ttl_seconds: int = settings.DJANGO_QUERY_PROFILER_KEYS_EXPIRY_SECONDS
+    ttl_seconds: int = settings.DJANGO_QUERY_PROFILER_REDIS_KEYS_EXPIRY_SECONDS
     REDIS_INSTANCE.set(name=_get_key(redis_key), value=pickled_query_profiled_data, ex=ttl_seconds)
     return redis_key
 

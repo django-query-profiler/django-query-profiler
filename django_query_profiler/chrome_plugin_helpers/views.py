@@ -1,5 +1,6 @@
 from typing import Dict
 
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from django_query_profiler.chrome_plugin_helpers import redis_utils
@@ -11,7 +12,7 @@ QUERY_PROFILER_LEVEL_TO_TEMPLATE: Dict[str, str] = {
 }
 
 
-def get_query_profiled_data(request, redis_key: str, query_profiler_level: str):
+def get_query_profiled_data(request, redis_key: str, query_profiler_level: str) -> HttpResponse:
     query_profiled_data: QueryProfiledData = redis_utils.retrieve_data(redis_key)
     context = {
         'summary': query_profiled_data.summary,

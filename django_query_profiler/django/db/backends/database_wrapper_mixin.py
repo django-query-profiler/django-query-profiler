@@ -4,7 +4,7 @@ All the databases have a different hierarchy of DatabaseWrapper, but all of them
 """
 
 from abc import ABC
-from typing import Union
+from typing import Optional
 
 from django.db.backends.base.base import BaseDatabaseWrapper
 from django.db.backends.utils import CursorDebugWrapper, CursorWrapper
@@ -31,7 +31,7 @@ class QueryProfilerDatabaseWrapperMixin(BaseDatabaseWrapper, ABC):
                             "have failed")
 
     @staticmethod
-    def db_row_count(cursor) -> Union[int, None]:
+    def db_row_count(cursor) -> Optional[int]:
         """
         Most database would not need to override this function.  Some like mysql might do - having it as a function
         leaves open the possibility (to override)

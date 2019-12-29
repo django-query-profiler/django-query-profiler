@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Optional
 
 from django_query_profiler.query_signature import QueryProfilerLevel
 
@@ -24,6 +24,6 @@ DJANGO_QUERY_PROFILER_APPS_MODULES_TO_REMOVE = ('django.apps', 'django.bin', 'dj
 
 # settings module restriction for all variables to be uppercase - including functions
 # noinspection PyPep8Naming
-def DJANGO_QUERY_PROFILER_LEVEL_FUNC(request) -> Union[QueryProfilerLevel, None]:
+def DJANGO_QUERY_PROFILER_LEVEL_FUNC(request) -> Optional[QueryProfilerLevel]:
     # return None to disable
     return QueryProfilerLevel.QUERY_SIGNATURE

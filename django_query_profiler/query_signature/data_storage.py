@@ -46,7 +46,7 @@ import threading
 from binascii import hexlify
 from collections import Counter
 from time import time
-from typing import List, Union
+from typing import List, Optional, Union
 
 import django.db.models as django_base_model
 import mmh3 as mmh3
@@ -65,7 +65,7 @@ class QueryProfilerThreadLocalStorage(threading.local):
         self._query_profiled_data_list: List[QueryProfiledData] = []
         self._entry_index_stack: List[int] = []
         self._query_profiler_level_stack: List[QueryProfilerLevel] = []
-        self._current_query_profiler_level: Union[QueryProfilerLevel, None] = None
+        self._current_query_profiler_level: Optional[QueryProfilerLevel] = None
 
     def reset(self) -> None:
         self.__init__()
@@ -105,7 +105,7 @@ class QueryProfilerThreadLocalStorage(threading.local):
         return combined_query_profiler_data
 
     def add_query_profiler_data(self, query_without_params: str, params: Union[list, str, None], target_db: str,
-                                query_execution_time_in_micros: int, db_row_count: Union[int, None]) -> None:
+                                query_execution_time_in_micros: int, db_row_count: Optional[int]) -> None:
         """ This function adds to the bucket in the last index of the list, if the profiler is on """
 
         if not self._query_profiler_enabled:

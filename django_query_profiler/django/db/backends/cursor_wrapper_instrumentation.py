@@ -4,7 +4,7 @@ that calls to "do something/nothing" after the query is executed
 """
 
 from time import time
-from typing import Any, Callable, Union
+from typing import Any, Callable, Optional
 
 from django.db.backends.utils import CursorDebugWrapper, CursorWrapper
 
@@ -12,7 +12,7 @@ from django_query_profiler.query_signature.data_storage import query_profiler_th
 
 
 class QueryProfilerCursorWrapper(CursorWrapper):
-    def __init__(self, cursor, db: str, db_row_count: Union[int, None]):
+    def __init__(self, cursor, db: str, db_row_count: Optional[int]):
         super().__init__(cursor, db)
         self.db_row_count = db_row_count
 

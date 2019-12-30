@@ -5,7 +5,7 @@ headers, for the chrome plugin to display
 """
 import json
 from time import time
-from typing import Callable, Union
+from typing import Callable, Optional
 
 from django.conf import settings
 from django.urls import reverse
@@ -26,7 +26,7 @@ class QueryProfilerMiddleware:
 
     def __call__(self, request):
         # Check if we have to enable query profiler or not.
-        query_profiler_level: Union[QueryProfilerLevel, None] = settings.DJANGO_QUERY_PROFILER_LEVEL_FUNC(request)
+        query_profiler_level: Optional[QueryProfilerLevel] = settings.DJANGO_QUERY_PROFILER_LEVEL_FUNC(request)
         if not query_profiler_level:
             return self.get_response(request)
 

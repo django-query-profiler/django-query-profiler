@@ -14,7 +14,7 @@ import typing
 from collections import Counter, OrderedDict, defaultdict
 from dataclasses import asdict, dataclass, field
 from enum import Enum, auto
-from typing import Callable, Dict, Tuple, Union
+from typing import Callable, Dict, Optional, Tuple
 
 from django.utils.functional import cached_property
 
@@ -25,7 +25,7 @@ RE_STATEMENT_NAME = re.compile(r'(\S+)')
 class StackTraceElement:
     module_name: str
     function_name: str
-    line_number: Union[int, None] = None  # None happens for django stack-trace
+    line_number: Optional[int] = None  # None happens for django stack-trace
 
     def __str__(self):
         return f'{self.module_name.replace(".", "/")}.py#{self.line_number} {self.function_name}()'
@@ -86,7 +86,7 @@ class QuerySignature:
 class QuerySignatureStatistics:
     frequency: int
     query_execution_time_in_micros: int
-    db_row_count: Union[int, None]
+    db_row_count: Optional[int]
 
     def __add__(self, other) -> 'QuerySignatureStatistics':
         """
@@ -125,8 +125,8 @@ class QueryProfiledSummaryData:
     sql_statement_type_counter: typing.Counter[SqlStatement]
     exact_query_duplicates: int
     total_query_execution_time_in_micros: int
-    total_db_row_count: Union[int, None]
-    potential_n_plus1_query_count: Union[int, None]
+    total_db_row_count: Optional[int]
+    potential_n_plus1_query_count: Optional[int]
 
     @cached_property
     def total_query_count(self) -> int:

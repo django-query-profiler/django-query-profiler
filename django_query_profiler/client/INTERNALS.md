@@ -1,5 +1,5 @@
 This package contains all the modules that anyone who uses django_query_profiler would use.  This is the only module
-which would be imported, in the cliet
+which would be imported, by the clients
 
 There are two ways to use the query profiler:
 1. Using the context manager/decorator around blocks of code which you want to profile.  This is defined in 

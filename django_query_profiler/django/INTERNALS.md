@@ -17,17 +17,17 @@ add_query_profiler_data() function, and this package responsibility ends with de
         CursorWrapper and CursorDebugWrapper
 
 3.  At this stage, we have a cursorWrapper implementation which does what we want to do.  Now we have to make sure that
-    django uses our Cursorwrapper implementation, and not its own CursorWrapper.  There are three possible ways:
+    django uses our CursorWrapper implementation, and not its own CursorWrapper.  There are three possible ways:
     -  Modify django
     -  Monkey patch django
-    -  Django provides a way to customize databbase engine, which is taken as a string.  We can explore more into this
+    -  Django provides a way to customize database engine, which is taken as a string.  We can explore more into this
 
     Django provides this functionality of specifying database engine as a string, so that it can support other database
     backends.  E.g. there are projects which support Microsoft sql server, which is not included in django.
     
     **Basic Idea**
     
-    The basic idea is - we can implement our own database engines, which delegates all resposbility to existing database
+    The basic idea is - we can implement our own database engines, which delegates all responsibility to existing database
     engines except overriding the part of creating the cursor.  This way, all the clients would just have to change
     in settings.py, for getting this profiler.
 
@@ -75,4 +75,4 @@ add_query_profiler_data() function, and this package responsibility ends with de
     Since we have our own DatabaseWrapper for all databases now, lets add it in the mixin, and any database (especially
     mysql) can override it
 
-    Thats all there is to "intercepting queries" part.  Lets see the "do something/nothing" implementation now
+    That's all there is to "intercepting queries" part.  Lets see the "do something/nothing" implementation now

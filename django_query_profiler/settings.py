@@ -1,6 +1,8 @@
 from typing import Optional
 
-from django_query_profiler.query_signature import QueryProfilerLevel
+from django.http.response import HttpResponseBase
+
+from django_query_profiler.query_signature import QueryProfilerLevel, QueryProfiledData
 
 # Parameters for configuring redis
 DJANGO_QUERY_PROFILER_REDIS_HOST: str = 'localhost'
@@ -44,3 +46,18 @@ def DJANGO_QUERY_PROFILER_LEVEL_FUNC(request) -> Optional[QueryProfilerLevel]:
         including functions
     """
     return QueryProfilerLevel.QUERY_SIGNATURE
+
+
+# noinspection PyPep8Naming
+def DJANGO_QUERY_PROFILER_QUERY_PROFILED_DATA_POST_PROCESSING(
+        query_profiled_data: QueryProfiledData,
+        response: HttpResponseBase) -> None:
+    """
+    This function is called by the QueryProfilerMiddleware after it has profiled the data.  This is a hook for the
+    clients to do something with the data collected by profiler.
+
+    One example could be to log the data in a log file, and do some analysis with it.
+    Another example could be to add additional headers on the response, or change the values that are set by the
+    QueryProfilerMiddleware
+    """
+    pass

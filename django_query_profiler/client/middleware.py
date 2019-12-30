@@ -8,6 +8,8 @@ from time import time
 from typing import Callable, Optional
 
 from django.conf import settings
+from django.http import HttpRequest, HttpResponse
+from django.http.response import HttpResponseBase
 from django.urls import reverse
 
 import django_query_profiler.client.urls as query_profiler_url
@@ -24,7 +26,7 @@ class QueryProfilerMiddleware:
     def __init__(self, get_response: Callable):
         self.get_response = get_response
 
-    def __call__(self, request):
+    def __call__(self, request: HttpRequest) -> HttpResponseBase:
         # Check if we have to enable query profiler or not.
         query_profiler_level: Optional[QueryProfilerLevel] = settings.DJANGO_QUERY_PROFILER_LEVEL_FUNC(request)
         if not query_profiler_level:
@@ -62,4 +64,6 @@ class QueryProfilerMiddleware:
         response[ChromePluginData.TIME_SPENT_PROFILING_IN_MICROS] = query_profiled_data.time_spent_profiling_in_micros
         response[ChromePluginData.TOTAL_SERVER_TIME_IN_MILLIS] = int((time() - start_time) * 1000)
         response[ChromePluginData.QUERY_PROFILER_DETAILED_VIEW_LINK_TEXT] = detailed_view_link_text
+
+        settings.DJANGO_QUERY_PROFILER_QUERY_PROFILED_DATA_POST_PROCESSING(query_profiled_data, response)
         return response

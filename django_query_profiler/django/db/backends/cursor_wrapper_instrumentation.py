@@ -8,7 +8,7 @@ from typing import Any, Callable, Optional
 
 from django.db.backends.utils import CursorDebugWrapper, CursorWrapper
 
-from django_query_profiler.query_profiler_storage.data_storage import query_profiler_thread_local_storage
+from django_query_profiler.query_profiler_storage.data_collector import query_profiler_thread_local_storage
 
 
 class QueryProfilerCursorWrapper(CursorWrapper):

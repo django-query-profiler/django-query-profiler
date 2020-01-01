@@ -45,8 +45,8 @@ Implementation details
 a. github `link
 <https://github.com/django-query-profiler/django-query-profiler/tree/master/django_query_profiler/query_profiler_storage>`_
 
-b. This package has a `data_storage
-<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/data_storage.py>`_
+b. This package has a `data_collector
+<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/data_collector.py>`_
 module where we define a thread-local which exposes three functions:
 
   - _`enter_profiler_mode`: Just sets the profiler to on state

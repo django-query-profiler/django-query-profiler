@@ -3,7 +3,7 @@ from typing import Any
 from unittest import TestCase
 
 from django_query_profiler.query_profiler_storage import QueryProfiledSummaryData, QueryProfilerLevel, SqlStatement
-from django_query_profiler.query_profiler_storage.data_storage import query_profiler_thread_local_storage
+from django_query_profiler.query_profiler_storage.data_collector import query_profiler_thread_local_storage
 
 
 class DataStorageTest(TestCase):

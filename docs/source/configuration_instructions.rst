@@ -42,6 +42,8 @@ See this `PR
 <https://github.com/django-query-profiler/django-query-profiler-sample-app/pull/1>`_ on how to configure this in your application,
 and how the plugin is going to look like after your configuration
 
+.. image:: ../_static/chrome_plugin.png
+
 
 as chrome plugin without detailed view
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -74,6 +76,8 @@ In that scenario, the only change would be in the application's settings.py.  We
 See this `PR
 <https://github.com/django-query-profiler/django-query-profiler-sample-app/pull/2>`_ on how to configure this in your application,
 and how the plugin is going to look like after your configuration
+
+.. image:: ../_static/chrome_plugin_without_detailed_view.png
 
 as context manager
 ^^^^^^^^^^^^^^^^^^

@@ -1,7 +1,7 @@
 from collections import Counter
 from unittest import TestCase
 
-from django_query_profiler.query_signature import (
+from django_query_profiler.query_profiler_storage import (
     QueryProfiledData, QueryProfiledSummaryData, QuerySignature, QuerySignatureStatistics, SqlStatement,
     StackTraceElement
 )

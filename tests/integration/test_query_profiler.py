@@ -1,8 +1,8 @@
 from unittest import TestCase
 
 from django_query_profiler.client.context_manager import QueryProfiler
-from django_query_profiler.query_signature import QueryProfilerLevel
-from django_query_profiler.query_signature.data_storage import query_profiler_thread_local_storage
+from django_query_profiler.query_profiler_storage import QueryProfilerLevel
+from django_query_profiler.query_profiler_storage.data_storage import query_profiler_thread_local_storage
 
 from ..testapp.models import Pizza
 from .test_query_signature_analyze import _helper_bulk_create_toppings_pizzas_restaurants

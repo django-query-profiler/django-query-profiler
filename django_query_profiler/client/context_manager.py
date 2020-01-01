@@ -4,8 +4,8 @@ simply delegates the call to that module
 """
 from typing import Optional
 
-from django_query_profiler.query_signature import QueryProfiledData, QueryProfilerLevel
-from django_query_profiler.query_signature.data_storage import query_profiler_thread_local_storage
+from django_query_profiler.query_profiler_storage import QueryProfiledData, QueryProfilerLevel
+from django_query_profiler.query_profiler_storage.data_storage import query_profiler_thread_local_storage
 
 
 class QueryProfiler:

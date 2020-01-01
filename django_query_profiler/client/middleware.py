@@ -15,7 +15,7 @@ from django.urls import reverse
 import django_query_profiler.client.urls as query_profiler_url
 from django_query_profiler.chrome_plugin_helpers import ChromePluginData, redis_utils
 from django_query_profiler.client.context_manager import QueryProfiler
-from django_query_profiler.query_signature import QueryProfiledData, QueryProfilerLevel
+from django_query_profiler.query_profiler_storage import QueryProfiledData, QueryProfilerLevel
 
 DETAILED_VIEW_EXCEPTION_URL = "django_query_profiler_detailed_view_not_setup_check_redis_and_urls.py"
 DETAILED_VIEW_EXCEPTION_LINK_TEXT = "redis_or_urls.py_not_setup"

@@ -1,7 +1,7 @@
 from typing import Dict, Set
 from unittest import TestCase
 
-from django_query_profiler.query_signature import stack_tracer
+from django_query_profiler.query_profiler_storage import stack_tracer
 
 
 class StackTracerTest(TestCase):

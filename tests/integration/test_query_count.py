@@ -3,7 +3,7 @@ from typing import Dict
 from django.test import TestCase
 
 from django_query_profiler.client.context_manager import QueryProfiler
-from django_query_profiler.query_signature import QueryProfilerLevel, SqlStatement
+from django_query_profiler.query_profiler_storage import QueryProfilerLevel, SqlStatement
 
 from ..testapp.models import Topping
 

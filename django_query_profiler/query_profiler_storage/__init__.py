@@ -68,7 +68,7 @@ class QuerySignature:
 
     @cached_property
     def analysis(self) -> QuerySignatureAnalyzeResult:
-        from django_query_profiler.query_signature.query_signature_analyze import code_recommendation
+        from django_query_profiler.query_profiler_storage.query_signature_analyze import code_recommendation
         return code_recommendation(self)
 
     @property

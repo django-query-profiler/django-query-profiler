@@ -1,6 +1,6 @@
 from unittest.case import TestCase
 
-from django_query_profiler.query_signature import SqlStatement
+from django_query_profiler.query_profiler_storage import SqlStatement
 
 
 class SqlStatementFromSqlTest(TestCase):

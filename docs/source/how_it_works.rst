@@ -43,10 +43,10 @@ Implementation details
 -------------------------
 
 a. github `link
-<https://github.com/django-query-profiler/django-query-profiler/tree/master/django_query_profiler/query_signature>`_
+<https://github.com/django-query-profiler/django-query-profiler/tree/master/django_query_profiler/query_profiler_storage>`_
 
 b. This package has a `data_storage
-<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_signature/data_storage.py>`_
+<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/data_storage.py>`_
 module where we define a thread-local which exposes three functions:
 
   - _`enter_profiler_mode`: Just sets the profiler to on state
@@ -54,17 +54,17 @@ module where we define a thread-local which exposes three functions:
   - add_query_profiled_data:  If the profiler is on, start collecting data in its thread-local
 
 c. We have defined our data models in the `__init__.py file
-<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_signature/__init__.py>`_
+<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/__init__.py>`_
 All the bookkeeping code happens in these models, in the python magic functions like the `__add__` ones.
 
 d. For capturing the stack trace, and segregating them into (application, django) stack trace, we have `stack_tracer
-<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_signature/stack_tracer.py>`_ module
+<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/stack_tracer.py>`_ module
 
 e. We are trying to use the django stack trace to figure out if the query is happening because of a forward or a reverse
 relationship, which helps us to know if this could have been avoided by a `select_related/prefetch_related`.
 
 This is happening in the `query_signature_analyze
-<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_signature/query_signature_analyze.py>`_ module.
+<https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/query_signature_analyze.py>`_ module.
 We are trying to analyze django stack trace, and see if we can find some useful known pattern
 
 2. django

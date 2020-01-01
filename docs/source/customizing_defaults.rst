@@ -35,7 +35,7 @@ settings.py::
 
     from django_query_profiler.settings import *
     from django.http.response import HttpResponseBase
-    from django_query_profiler.query_signature import QueryProfiledData
+    from django_query_profiler.query_profiler_storage import QueryProfiledData
 
 
     def DJANGO_QUERY_PROFILER_QUERY_PROFILED_DATA_POST_PROCESSING(

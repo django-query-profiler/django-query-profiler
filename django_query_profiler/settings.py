@@ -2,7 +2,7 @@ from typing import Optional
 
 from django.http.response import HttpResponseBase
 
-from django_query_profiler.query_signature import QueryProfilerLevel, QueryProfiledData
+from django_query_profiler.query_profiler_storage import QueryProfilerLevel, QueryProfiledData
 
 # Parameters for configuring redis
 DJANGO_QUERY_PROFILER_REDIS_HOST: str = 'localhost'

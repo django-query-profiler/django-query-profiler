@@ -20,7 +20,7 @@ TODO(Yash) Add a description copying from the blog and the image.
 Installing It
 =============
 
-For usage
+for usage
 ^^^^^^^^^
 Simplest way to get the profiler is to use pip, and installing chromium extension from chrome store:
 
@@ -38,12 +38,12 @@ You can verify that the application is available on your PYTHONPATH by opening a
   >>> import django_query_profiler
   >>> django_query_profiler.VERSION
 
-For development
+for development
 ^^^^^^^^^^^^^^^
 1. clone the git repository from GitHub and run setup.py::
 
      $ git clone git://github.com/django-query-profiler/django-query-profiler.git
-     $ python3 -m venv <venv_path>;  source <venv_path>/bin/activate;
+     $ <venv>
      $ cd django-query-profiler
      $ python setup.py test;  python setup.py install
 
@@ -55,8 +55,8 @@ For development
       - click on load unpacked.
       - Select the cloned package above
 
-Configuring your application
-============================
+Configuring It
+==============
 
 Please follow this link :doc:`configuration_instructions`. Enjoy.
 
@@ -70,6 +70,7 @@ Contents
    configuration_instructions
    customizing_defaults
    choosing_profiler_level
+   how_it_works
 
 
 Indices and tables

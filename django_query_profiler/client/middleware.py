@@ -8,7 +8,7 @@ from time import time
 from typing import Callable, Optional
 
 from django.conf import settings
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.http.response import HttpResponseBase
 from django.urls import reverse
 

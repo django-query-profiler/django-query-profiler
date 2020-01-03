@@ -16,6 +16,13 @@
         <link rel="stylesheet"
               href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+        <!-- D3 flamegraph -->
+        <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/spiermar/d3-flame-graph@2.0.3/dist/d3-flamegraph.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/spiermar/d3-flame-graph@2.0.3/dist/d3-flamegraph.css">
+
+        <script>var flamegraphStack = {{flamegraphStack|safe}};</script>
         <script>hljs.initHighlightingOnLoad();</script>
 
         <style>
@@ -59,6 +66,22 @@
 
         <div class="container-fluid">
             <h2>Api Details by query signature</h2>
+
+						<!-- flamegraph -->
+						<div id="chart" style="margin: 10px 20px;"></div>
+						<script type="text/javascript">
+						var flamegraph = d3.flamegraph()
+							.width($('#chart').innerWidth())
+							.cellHeight(18)
+							.transitionDuration(750)
+							.transitionEase(d3.easeCubic)
+							.differential(false)
+							.selfValue(false);
+
+						d3.select("#chart")
+							.datum(flamegraphStack)
+							.call(flamegraph);
+						</script>
 
             <div class="panel-group">
                 <div class="panel panel-default">

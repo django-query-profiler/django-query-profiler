@@ -185,17 +185,27 @@ class QueryProfiledData:
 
     @cached_property
     def flamegraph_stack(self) -> Dict:
-        tree = { 'name': "<request>", 'value': 0, 'children': {} }
+        tree = {
+            'name': "<request>",
+            'value': 0,
+            'children': {}
+        }
+
         def add_child(node, name, count):
             children = node['children']
-            current = children.setdefault(name, { 'name': name, 'value': 0, 'children': {} })
+            current = children.setdefault(name, {
+                'name': name,
+                'value': 0,
+                'children': {}
+            })
             current['value'] += count
             return current
 
         for query_signature, query_signature_statistics in self.query_signature_to_query_signature_statistics.items():
             current = tree
             for stack in reversed(query_signature.app_stack_trace):
-                current = add_child(current, "%s:%s" % (stack.module_name, stack.function_name), query_signature_statistics.frequency)
+                name = "%s:%s" % (stack.module_name, stack.function_name)
+                current = add_child(current, name, query_signature_statistics.frequency)
 
         def dedictify(current):
             children = list(current['children'].values())

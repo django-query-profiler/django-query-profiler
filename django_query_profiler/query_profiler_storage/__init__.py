@@ -183,6 +183,35 @@ class QueryProfiledData:
             total_db_row_count=total_db_row_count,
             potential_n_plus1_query_count=None if is_any_query_signature_fake else potential_n_plus1_query_count)
 
+    @cached_property
+    def flamegraph_stack(self) -> Dict:
+        tree = { 'name': "<request>", 'value': 0, 'children': {} }
+        def add_child(node, name, count):
+            children = node['children']
+            current = children.setdefault(name, { 'name': name, 'value': 0, 'children': {} })
+            current['value'] += count
+            return current
+
+        for query_signature, query_signature_statistics in self.query_signature_to_query_signature_statistics.items():
+            current = tree
+            for stack in reversed(query_signature.app_stack_trace):
+                current = add_child(current, "%s:%s" % (stack.module_name, stack.function_name), query_signature_statistics.frequency)
+
+        def dedictify(current):
+            children = list(current['children'].values())
+            current['children'] = children
+            for child in children:
+                dedictify(child)
+
+        dedictify(tree)
+
+        if len(tree['children']) == 1:
+            tree = tree['children'][0]
+        else:
+            tree['value'] = sum(node['value'] for node in tree['children'])
+
+        return tree
+
     def __add__(self, other) -> 'QueryProfiledData':
         """
         This class is not a very obvious choice of additive object.  But, the ability to add instances of this class

@@ -1,0 +1,3 @@
+include LICENSE README.rst
+recursive-include django_query_profiler/templates *
+graft tests

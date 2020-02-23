@@ -1,0 +1,20 @@
+language: python
+python :
+  - "3.8"
+  - "3.7"
+  - "3.6"
+install: pip install tox-travis codecov
+script :
+  tox -- --cov --cov-append
+
+services:
+  - mysql
+  - postgresql
+  - redis-server
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - mysql -e 'create database travis_ci_test character set utf8 collate utf8_general_ci;'
+
+after_success:
+  - codecov

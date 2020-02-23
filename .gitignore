@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+build/
+develop-eggs/
+dist/
+/.tox/
+/.coverage
+/htmlcov/

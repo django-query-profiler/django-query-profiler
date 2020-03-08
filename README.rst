@@ -14,8 +14,6 @@ Django Query Profiler
 .. image:: https://readthedocs.org/projects/django-query-profiler/badge/?version=latest
   :target: https://django-query-profiler.readthedocs.io/en/latest/index.html
 
-.
-
 .. image:: https://img.shields.io/pypi/pyversions/django-query-profiler.svg
   :target: https://pypi.org/project/django-query-profiler/
 
@@ -24,6 +22,8 @@ Django Query Profiler
 
 .. image:: https://badge.fury.io/py/django-query-profiler.svg
     :target: https://pypi.org/project/django-query-profiler/
+
+
 
 This is a query profiler for Django applications, for helping developers answer the question "My Django code/page/API is slow, How do I find out why?"
 
@@ -124,7 +124,7 @@ See this `PR
 <https://github.com/django-query-profiler/django-query-profiler-sample-app/pull/1>`__ on how to configure this in your application,
 and how the plugin is going to look like after your configuration
 
-.. image:: docs/_static/chrome_plugin.png
+.. image:: https://raw.githubusercontent.com/django-query-profiler/django-query-profiler/master/docs/_static/chrome_plugin.png
 
 
 This is covered in detail in the `configuration instructions <https://django-query-profiler.readthedocs.io/en/latest/configuration_instructions.html>`__ section in the docs

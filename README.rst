@@ -42,15 +42,15 @@ This works with any version of django >= 2.0, and running on python >= 3.6
 Profiler in Action
 ==================
 
-as a chrome plugin:
--------------------
+as a chrome plugin
+------------------
 
 This image shows how the chrome plugin would display profiled data, once it is configured & installed
 
 .. image:: https://raw.githubusercontent.com/django-query-profiler/django-query-profiler/master/docs/_static/django_query_profiler_in_action.gif
 
-on command line:
-----------------
+on command line
+---------------
 
 See this `file
 <https://github.com/django-query-profiler/django-tip-02/blob/18785d9e44b5f542ce26f555a4bcf18124f788d0/DJANGO_QUERY_PROFILER.md>`_ in the PR to see how to use the context manager, and how easy it is to find performance issues :-)
@@ -60,7 +60,7 @@ The output of Django query profiler is same for the command line or the chrome p
 Getting Started
 ===============
 
-installation:
+installation
 ------------
 
 The simplest way to getting started is to install the django query profiler from pip, and get the chrome plugin from
@@ -133,7 +133,7 @@ along with how the code is organized.
 The docs also contain references to various links which helped us to lear about internals of Django, and to various projects which helped us to learn on how to add hooks when Django executes a query
 
 
-Choosing Profiler levels:
+Choosing Profiler levels
 ========================
 
 We have two levels of profiler, and each of them have a different overhead.  The two levels are:

@@ -14,11 +14,16 @@ Django Query Profiler
 .. image:: https://readthedocs.org/projects/django-query-profiler/badge/?version=latest
   :target: https://django-query-profiler.readthedocs.io/en/latest/index.html
 
+.
+
 .. image:: https://img.shields.io/pypi/pyversions/django-query-profiler.svg
   :target: https://pypi.org/project/django-query-profiler/
 
 .. image:: https://img.shields.io/pypi/djversions/django-query-profiler
   :target: https://pypi.org/project/django-query-profiler/
+
+.. image:: https://badge.fury.io/py/django-query-profiler.svg
+    :target: https://pypi.org/project/django-query-profiler/
 
 This is a query profiler for Django applications, for helping developers answer the question "My Django code/page/API is slow, How do I find out why?"
 
@@ -146,7 +151,7 @@ We have two levels of profiler, and each of them have a different overhead.  The
 Customizing the profiler
 ========================
 
-We have tried to make the profiler customizable by providing hooks in various points.   Some of the use cases are covered
+We have tried to make the profiler customizable by providing hooks at various points.   Some of the use cases are covered
 here in the `customizing the defaults <https://django-query-profiler.readthedocs.io/en/latest/customizing_defaults.html>`__ section in docs.
 
 We plan to add more hooks for customizing the profiler as we gather more feedback from real world use cases.

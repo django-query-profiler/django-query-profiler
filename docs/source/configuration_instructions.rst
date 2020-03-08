@@ -29,6 +29,25 @@ The only places where we will need to change are the settings.py and urls.py fil
       "ENGINE": "django_query_profiler.django.db.backends.sqlite3",
   )
 
+
+This works for all the databases supported by Django.  In all the databases, the ENGINE settings has to be prepended by `django_query_profiler` for the profiler to work
+
+In case of mysql/mariadb, the ENGINE setting would look like::
+
+  # from "django.db.backends.mysql"
+  "ENGINE": "django_query_profiler.django.db.backends.mysql",
+
+In case of postgres, the ENGINE setting would look like::
+
+  # from "django.db.backends.postgresql_psycopg2"
+  "ENGINE": "django_query_profiler.django.db.backends.postgresql_psycopg2",
+
+In case of oracle, the ENGINE setting would look like::
+
+  # from "django.db.backends.oracle"
+  "ENGINE": "django_query_profiler.django.db.backends.oracle",
+
+
 **urls.py**::
 
   # Add this line to existing urls.py

@@ -29,8 +29,20 @@ Configuring profiling levels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Based on the overhead that profiler adds for every query, the profiler level can be configured in the application
-settings.py file.  The profiler provides a hook for changing the profiler type given a request object
+settings.py file.
 
-The profiling level of each API is calculated per request, and can be configured easily.
-See :doc:`customizing_defaults<../customizing_defaults>` on how this can be done
+1. The default setting is to run the profiler in `QUERY_SIGNATURE` level.  If you want to run the application in QUERY level,
+this is how you should configure in your settings.py file::
+
+    from django_query_profiler.settings import *
+    from django_query_profiler.query_profiler_storage import QueryProfilerLevel
+
+    def DJANGO_QUERY_PROFILER_LEVEL_FUNC(request) -> Optional[QueryProfilerLevel]:
+      return QueryProfilerLevel.QUERY
+
+
+2. If you want to configure it per request, the profiler provides a hook for changing the profiler type given a request object
+
+  The profiling level of each API is calculated per request, and can be configured easily.
+  See :doc:`customizing_defaults<../customizing_defaults/>` on how this can be done
 

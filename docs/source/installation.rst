@@ -1,9 +1,14 @@
 installation
 ============
 
+requirements
+^^^^^^^^^^^^
+
+This works with any version of django >= 2.0, and running on python >= 3.6
+
 for usage
 ^^^^^^^^^
-Simplest way to get the profiler is to use pip, and installing chromium extension from chrome store:
+Simplest way to get the profiler is to use pip, and installing chrome extension from chrome store:
 
 - Python package::
 
@@ -15,9 +20,9 @@ Simplest way to get the profiler is to use pip, and installing chromium extensio
   >>> import django_query_profiler
   >>> django_query_profiler.VERSION
 
-- Chromium extension::
+- Chrome extension:  Download from chrome `webstore <https://chrome.google.com/webstore/detail/django-query-profiler/ejdgfhecpkhdnpdmdheacfmknaegicff>`__
 
-     https://www.google.com
+Note that the chrome extension works on any chromium based browser.  We have tested it on Google Chrome and Brave Browser
 
 
 for development
@@ -25,14 +30,14 @@ for development
 - clone the git repository for python package from GitHub and run setup.py::
 
      $ git clone git://github.com/django-query-profiler/django-query-profiler.git
-     $ <venv>
+     $ <venv activate command>
      $ cd django-query-profiler
      $ python setup.py test;  python setup.py install;
 
-- clone the git repository for chromium plugin and add it to any chromium based browser::
+- clone the git repository for chrome plugin and add it to any chromium based browser::
 
     git clone git://github.com/django-query-profiler/django-query-profiler-chrome-plugin.git
-    Open chrome://extensions in any chromium based browser,
+    Open chrome://extensions (command works in any chromium based browser)
       - check Developer mode,
       - click on load unpacked.
       - Select the cloned package above

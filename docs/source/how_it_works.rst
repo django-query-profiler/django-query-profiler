@@ -24,13 +24,13 @@ Basic Ideas
 3. Once we have the above two pieces figured out, we have to start collecting this data when a request happens, and stop when the request gets finished, ie. figure out the boundaries of profiling
 
   - A middleware seems like a good boundary, but that would limit us to just requests.
-  - A context manager seems like a more generic boundary, and a django middleware can then just call the context manager.
+  - A context manager seems like a more generic boundary, and a django middleware can then just call the context manager.  This would allow us to use the profiler from command line
 
 4. Once we have this data, where should the data be displayed about the stack trace & the query
 
   - If it was called as part of context manager, user would know what to do with the data
   - If it was called as part of a request, chrome plugin seems like a good place for displaying this data.  Middleware can set the data in the headers,
-    ideally a chrome plugin should be able to read that, and display it in the plugin
+    and the chrome plugin should be able to read that, and display it in the plugin
 
 
 
@@ -57,7 +57,7 @@ This part is divided by the package that answers the four question/idea discusse
     <https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/__init__.py>`__.
     All the bookkeeping code happens in these models, in the python magic functions like the `__add__` ones.
 
-  - For capturing the stack trace, and segregating them into (application, django) stack trace, we have `stack_tracer
+  - For capturing the stack trace, and grouping them into (application, django) stack trace, we have `stack_tracer
     <https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/query_profiler_storage/stack_tracer.py>`__ module
 
   - We are trying to use the django stack trace to figure out if the query is happening because of a forward or a reverse

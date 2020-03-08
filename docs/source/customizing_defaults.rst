@@ -5,7 +5,7 @@ This doc covers how to change the `django-query-profiler` settings to suit your 
 expects are in `django_query_profiler/settings.py
 <https://github.com/django-query-profiler/django-query-profiler/blob/master/django_query_profiler/settings.py>`_ file
 
-Irrespective of if you are using the chromium plugin, or the context manager, there is one line you would have added
+Irrespective of if you are using the chrome plugin, or the context manager, there is one line you would have added
 to your application settings.py file, for configuring the profiler::
 
   from django_query_profiler.settings import *
@@ -21,7 +21,7 @@ Here are some example of customizations that can be done:
     DJANGO_QUERY_PROFILER_REDIS_PORT: int = 8080
 
 
-- If we want to configure the profiler to be run on certain api's only.  The default setting is to run it on all api's.
+- If we want to configure the profiler to be run on `certain` api's only.  The default setting is to run it on all api's.
   The way to change the defaults would be do something in the application settings.py::
 
     from django_query_profiler.settings import *

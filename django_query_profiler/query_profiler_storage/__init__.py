@@ -13,7 +13,7 @@ import re
 import typing
 from collections import Counter, OrderedDict, defaultdict
 from dataclasses import asdict, dataclass, field
-from enum import Enum, auto
+from enum import Enum
 from typing import Callable, Dict, Optional, Tuple
 
 from django.utils.functional import cached_property
@@ -44,12 +44,15 @@ class StackTraceElement:
 
 
 class QuerySignatureAnalyzeResult(Enum):
-    UNKNOWN = auto()
-    MISSING_SELECT_RELATED = auto()
-    GET = auto()
-    MISSING_PREFETCH_RELATED = auto()
-    PREFETCHED_RELATED = auto()
-    FILTER = auto()
+    UNKNOWN = False
+    MISSING_SELECT_RELATED = True
+    GET = False
+    MISSING_PREFETCH_RELATED = True
+    PREFETCHED_RELATED = True
+    FILTER = False
+
+    def __init__(self, visible_in_ui):
+        self.visible_in_ui = visible_in_ui
 
 
 @dataclass(frozen=True)

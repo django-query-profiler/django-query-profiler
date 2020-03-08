@@ -172,12 +172,16 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <div style="padding-top: 30px; font-size: 12px">
-                                        <b>TL;DR&nbsp;</b>
-                                        <span>
-                                            {{ query_signature.analysis.name }}
-                                        </span>
-                                    </div>
+                                  <b>Recommendation?&nbsp;</b>
+                                  <div style="padding-top: 30px; font-size: 12px">
+                                    {% if query_signature.analysis.visible_in_ui %}
+                                      <span>
+                                          {{ query_signature.analysis.name }}
+                                      </span>
+                                    {% else %}
+                                      <span>None</span>
+                                    {% endif %}
+                                  </div>
                                 </div>
                             </div>
                         </div>

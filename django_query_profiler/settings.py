@@ -14,7 +14,7 @@ DJANGO_QUERY_PROFILER_REDIS_KEYS_EXPIRY_SECONDS: int = 3600
 """
 Parameter that controls if we should eat up the exception if redis or urls.py is not configured
 redis & urls.py are required for setting up the detailed view - the view that opens up when clicking on the
-link in the chromium plugin that says "Details link"
+link in the chrome plugin that says "Details link"
 Setting this parameter to True means that we would still get the summary view, and not raise Exception
 """
 DJANGO_QUERY_PROFILER_IGNORE_DETAILED_VIEW_EXCEPTION = True

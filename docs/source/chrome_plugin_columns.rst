@@ -1,5 +1,5 @@
-columns in chromium plugin
-==========================
+columns in chrome plugin
+========================
 
 .. image:: ../_static/chrome_plugin.png
 
@@ -21,5 +21,5 @@ There are 15 columns in the chrome plugin table:
 - Potential N+1's:  This represents the count of N+1 queries that the profiler found.  If this number seems high, the
   API is definitely something that should be optimized.
 - Exact sql duplicates: This represents the count of queries which had the same (query, param) but was executed multiple
-  times to the database.  If this number is higher, consider doing `query caching`
+  times to the database.  If this number is higher, consider doing `query caching`, or pulling the sql out of the loop
 - Details link: This is the url that would show a detailed view, and the recommendation on how to fix the code path

@@ -71,13 +71,13 @@ installation
 The simplest way to getting started is to install the django query profiler from pip, and get the chrome plugin from
 chrome web store.
 
-Python package::
+**Python package:**
+
+.. code-block:: console
 
   pip install django-query-profiler
 
-
-
-Chrome Plugin:
+**Chrome Plugin:**
 
 Download from `chrome webstore <https://chrome.google.com/webstore/detail/django-query-profiler/ejdgfhecpkhdnpdmdheacfmknaegicff>`__
 
@@ -90,31 +90,36 @@ configuration:
 This configuration is when we want to use the profiler along with the chrome plugin.  If we want to just use it on the
 command line, the configuration is much more simpler (two lines of change to settings.py file) - that is covered in the `docs <https://django-query-profiler.readthedocs.io/en/latest/configuration_instructions.html#as-context-manager>`__
 
-**settings.py**::
+**settings.py:**
 
-  from django_query_profiler.settings import *
+.. code-block:: python
 
-  INSTALLED_APPS = (
-      ...
-      'django_query_profiler',
-      ...
-  )
+    from django_query_profiler.settings import *
 
-  MIDDLEWARE = (
-      ...
-       # Request and all middleware that come after our middleware, would be profiled
-      'django_query_profiler.client.middleware.QueryProfilerMiddleware',
-      ...
-  )
+    INSTALLED_APPS = (
+        ...
+        'django_query_profiler',
+        ...
+    )
 
-  DATABASES = (
-      ...
-      # Adding django_query_profiler as a prefix to your ENGINE setting
-      # Assuming old ENGINE was "django.db.backends.sqlite3", this would be the new one
-      "ENGINE": "django_query_profiler.django.db.backends.sqlite3",
-  )
+    MIDDLEWARE = (
+        ...
+         # Request and all middleware that come after our middleware, would be profiled
+        'django_query_profiler.client.middleware.QueryProfilerMiddleware',
+        ...
+    )
 
-**urls.py**::
+    DATABASES = (
+        ...
+        # Adding django_query_profiler as a prefix to your ENGINE setting
+        # Assuming old ENGINE was "django.db.backends.sqlite3", this would be the new one
+        "ENGINE": "django_query_profiler.django.db.backends.sqlite3",
+    )
+
+
+**urls.py:**
+
+.. code-block:: python
 
   # Add this line to existing urls.py
   path('django_query_profiler/', include('django_query_profiler.client.urls'))
@@ -146,7 +151,9 @@ We have two levels of profiler, and each of them have a different overhead.  The
 1. QUERY_SIGNATURE:   This is the mode where we capture the query as well as the stack-trace.  This mode figures out the N+1 code paths and also tells us the proposed solution
 2. QUERY: This is the mode where we just capture queries, and not the stack-trace
 
+On an average, QUERY_SIGNATURE level adds an overhead of `1 millisecond per 7 queries`, and QUERY_SIGNATURE adds an overhead of `1 millisecond per 25 queries`.
 
+It is simple to change the profiler level for all the requests, or can be configured per request.  This is covered in the `choosing profiler level <https://django-query-profiler.readthedocs.io/en/latest/choosing_profiler_level.html>`__ section of the docs
 
 Customizing the profiler
 ========================

@@ -9,11 +9,16 @@ script :
 
 services:
   - mysql
-  - postgresql
   - redis-server
 
+addons:
+  postgresql: 9.6
+  apt:
+    packages:
+    - postgresql-9.6-postgis-2.3
+
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -U postgres -c "create extension postgis; create database travis_ci_test;"
   - mysql -e 'create database travis_ci_test character set utf8 collate utf8_general_ci;'
 
 after_success:

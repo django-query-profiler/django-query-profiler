@@ -30,7 +30,8 @@ class QueryProfilerQueryAndQuerySignatureTest(TestCase):
 
         with QueryProfiler(QueryProfilerLevel.QUERY) as qp_query:
             str(Pizza.objects.all())
-            self.assertEqual(data_collector_thread_local_storage._current_query_profiler_level, QueryProfilerLevel.QUERY)
+            self.assertEqual(data_collector_thread_local_storage._current_query_profiler_level,
+                             QueryProfilerLevel.QUERY)
         self.assertIsNone(data_collector_thread_local_storage._current_query_profiler_level)
 
         self.assertEqual(qp_query_signature.query_profiled_data.summary.total_query_count, 4)
@@ -43,7 +44,8 @@ class QueryProfilerQueryAndQuerySignatureTest(TestCase):
 
         with QueryProfiler(QueryProfilerLevel.QUERY) as qp_query:
             str(Pizza.objects.all())
-            self.assertEqual(data_collector_thread_local_storage._current_query_profiler_level, QueryProfilerLevel.QUERY)
+            self.assertEqual(data_collector_thread_local_storage._current_query_profiler_level,
+                             QueryProfilerLevel.QUERY)
         self.assertIsNone(data_collector_thread_local_storage._current_query_profiler_level)
 
         with QueryProfiler(QueryProfilerLevel.QUERY_SIGNATURE) as qp_query_signature:
@@ -59,7 +61,7 @@ class QueryProfilerQueryAndQuerySignatureTest(TestCase):
 
     def test_query_nested_by_another_query(self):
 
-        with QueryProfiler(QueryProfilerLevel.QUERY) as qp_query:
+        with QueryProfiler(QueryProfilerLevel.QUERY):
             str(Pizza.objects.all())
             self.assertEqual(data_collector_thread_local_storage._current_query_profiler_level,
                              QueryProfilerLevel.QUERY)

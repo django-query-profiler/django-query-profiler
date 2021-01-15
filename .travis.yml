@@ -1,11 +1,11 @@
 language: python
-python :
+python:
+  - "3.9"
   - "3.8"
   - "3.7"
   - "3.6"
 install: pip install tox-travis codecov
-script :
-  tox -- --cov --cov-append
+script: tox -- --cov --cov-append
 
 services:
   - mysql

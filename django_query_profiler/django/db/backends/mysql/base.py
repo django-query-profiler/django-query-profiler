@@ -9,4 +9,8 @@ class DatabaseWrapper(mysql_base.DatabaseWrapper, QueryProfilerDatabaseWrapperMi
 
     @staticmethod
     def db_row_count(cursor) -> Optional[int]:
-        return cursor.rowcount if not cursor.connection.errno() else -1
+        try:
+            if cursor.connection.errno():  # Not all mysql drivers have this attribute.  See Issue#19
+                return -1
+        except AttributeError:
+            return cursor.rowcount

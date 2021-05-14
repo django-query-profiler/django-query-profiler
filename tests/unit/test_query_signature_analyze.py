@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+from pyparsing import ParseException
+
 from django_query_profiler.query_profiler_storage import QuerySignature, QuerySignatureAnalyzeResult, StackTraceElement
 from django_query_profiler.query_profiler_storage.django_stack_trace_analyze import _parse_sql_for_tables_and_eq
 
@@ -198,3 +200,26 @@ class QuerySignatureAnalyzeTest(TestCase):
                               StackTraceElement('django.db.models.fields.related_descriptors', 'get_object', None)]
         query_signature: QuerySignature = QuerySignature(query_without_params, (), django_stack_trace, 'default')
         self.assertEqual(query_signature.analysis, QuerySignatureAnalyzeResult.MISSING_SELECT_RELATED)
+
+    def test_select_distinct_postgres(self):
+        """
+        This test validates SELECT DISTINCT ON that is allowable in Postgres
+        See https://github.com/django-query-profiler/django-query-profiler/issues/21 for more details
+        """
+
+        query_without_params = '''
+            SELECT DISTINCT ON (url) url, request_duration
+            FROM logs
+            ORDER BY url, timestamp DESC
+        '''
+        self.assertRaises(ParseException, lambda: _parse_sql_for_tables_and_eq(query_without_params))
+
+        django_stack_trace = [StackTraceElement('django.db.models.sql.compiler', 'execute_sql', None),
+                              StackTraceElement('django.db.models.sql.compiler', 'results_iter', None),
+                              StackTraceElement('django.db.models.query', 'iterator', None),
+                              StackTraceElement('django.db.models.query', '_fetch_all', None),
+                              StackTraceElement('django.db.models.query', '__iter__', None),
+                              StackTraceElement('django.db.models.query', '__getitem__', None),
+                              StackTraceElement('django.db.models.query', 'first', None)]
+        query_signature: QuerySignature = QuerySignature(query_without_params, (), django_stack_trace, 'default')
+        self.assertEqual(query_signature.analysis, QuerySignatureAnalyzeResult.UNKNOWN)

@@ -12,6 +12,7 @@ from typing import Callable, Dict, Tuple
 from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 from django.db.models.query import QuerySet
 from moz_sql_parser import parse
+from pyparsing import ParseException
 
 from . import QuerySignature, QuerySignatureAnalyzeResult, SqlStatement, StackTraceElement
 
@@ -58,17 +59,26 @@ def code_recommendation(query_signature: QuerySignature) -> QuerySignatureAnalyz
         return QuerySignatureAnalyzeResult.GET
 
     # All easy cases are done now.  Parsing sql now
-    table_names, where_clause_exists, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
+    try:
+        table_names, where_clause_exists, where_equality_key = _parse_sql_for_tables_and_eq(query_without_params)
 
-    # Checking if its missing prefetch related - which is the hardest case
-    prefetch_missing_conditions = (MISSING_PREFETCH_RELATED_STACK_TRACE_ELEMENT in django_stack_trace and
-                                   table_names and where_equality_key and '_id' in where_equality_key and
-                                   any(table_name for table_name in table_names if table_name in where_equality_key))
-    if prefetch_missing_conditions:
-        return QuerySignatureAnalyzeResult.MISSING_PREFETCH_RELATED
+        # Checking if its missing prefetch related - which is the hardest case
+        prefetch_missing_conditions = (
+                MISSING_PREFETCH_RELATED_STACK_TRACE_ELEMENT in django_stack_trace
+                and table_names
+                and where_equality_key
+                and '_id' in where_equality_key
+                and any(table_name for table_name in table_names if table_name in where_equality_key)
+        )
+        if prefetch_missing_conditions:
+            return QuerySignatureAnalyzeResult.MISSING_PREFETCH_RELATED
 
-    if where_clause_exists and FILTER_STACK_TRACE_ELEMENTS.intersection(django_stack_trace):
-        return QuerySignatureAnalyzeResult.FILTER
+        if where_clause_exists and FILTER_STACK_TRACE_ELEMENTS.intersection(django_stack_trace):
+            return QuerySignatureAnalyzeResult.FILTER
+    except ParseException:
+        # Don't want to throw exception in case moz parser is not able to parse the sql;  See Issue#21
+        pass
+
     return QuerySignatureAnalyzeResult.UNKNOWN
 
 

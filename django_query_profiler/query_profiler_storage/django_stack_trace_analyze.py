@@ -12,7 +12,6 @@ from typing import Callable, Dict, Tuple
 from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 from django.db.models.query import QuerySet
 from moz_sql_parser import parse
-from pyparsing import ParseException
 
 from . import QuerySignature, QuerySignatureAnalyzeResult, SqlStatement, StackTraceElement
 
@@ -75,8 +74,8 @@ def code_recommendation(query_signature: QuerySignature) -> QuerySignatureAnalyz
 
         if where_clause_exists and FILTER_STACK_TRACE_ELEMENTS.intersection(django_stack_trace):
             return QuerySignatureAnalyzeResult.FILTER
-    except ParseException:
-        # Don't want to throw exception in case moz parser is not able to parse the sql;  See Issue#21
+    except Exception:
+        # Don't want to throw exception in case moz parser is not able to parse the sql;  See Issue#21 & Issue#23
         pass
 
     return QuerySignatureAnalyzeResult.UNKNOWN

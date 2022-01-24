@@ -1,6 +1,6 @@
 import os
 
-from django_query_profiler.settings import * # noqa
+from django_query_profiler.settings import *  # noqa
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

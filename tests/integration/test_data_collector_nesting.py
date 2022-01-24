@@ -1,10 +1,9 @@
 from unittest import TestCase
 
-from tests.testapp.food.models import Pizza
-
 from django_query_profiler.client.context_manager import QueryProfiler
 from django_query_profiler.query_profiler_storage import QueryProfilerLevel
 from django_query_profiler.query_profiler_storage.data_collector import data_collector_thread_local_storage
+from tests.testapp.food.models import Pizza
 
 from .fixtures import bulk_create_toppings_pizzas_restaurants
 

@@ -1,7 +1,5 @@
 from unittest import TestCase
 
-from pyparsing import ParseException
-
 from django_query_profiler.query_profiler_storage import QuerySignature, QuerySignatureAnalyzeResult, StackTraceElement
 from django_query_profiler.query_profiler_storage.django_stack_trace_analyze import _parse_sql_for_tables_and_eq
 
@@ -212,7 +210,7 @@ class QuerySignatureAnalyzeTest(TestCase):
             FROM logs
             ORDER BY url, timestamp DESC
         '''
-        self.assertRaises(ParseException, lambda: _parse_sql_for_tables_and_eq(query_without_params))
+        # self.assertRaises(ParseException, lambda: _parse_sql_for_tables_and_eq(query_without_params))
 
         django_stack_trace = [StackTraceElement('django.db.models.sql.compiler', 'execute_sql', None),
                               StackTraceElement('django.db.models.sql.compiler', 'results_iter', None),

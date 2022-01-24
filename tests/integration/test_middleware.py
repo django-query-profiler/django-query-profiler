@@ -8,12 +8,12 @@ import fakeredis
 from django.http import HttpRequest, HttpResponse
 from django.http.response import HttpResponseBase
 from django.test import TestCase, override_settings
-from tests.testapp.food.models import Topping
 
 from django_query_profiler.chrome_plugin_helpers import ChromePluginData, redis_utils
 from django_query_profiler.chrome_plugin_helpers.views import get_query_profiled_data
 from django_query_profiler.client.middleware import DETAILED_VIEW_EXCEPTION_LINK_TEXT, DETAILED_VIEW_EXCEPTION_URL
 from django_query_profiler.query_profiler_storage import QueryProfiledData, QueryProfilerLevel, SqlStatement
+from tests.testapp.food.models import Topping
 
 logger = logging.getLogger('testing')
 

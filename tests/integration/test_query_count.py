@@ -1,11 +1,11 @@
 from typing import Dict
 
 from django.test import TestCase
-from tests.integration.fixtures import bulk_create_toppings
-from tests.testapp.food.models import Topping
 
 from django_query_profiler.client.context_manager import QueryProfiler
 from django_query_profiler.query_profiler_storage import QueryProfilerLevel, SqlStatement
+from tests.integration.fixtures import bulk_create_toppings
+from tests.testapp.food.models import Topping
 
 
 class QueryCountTest(TestCase):

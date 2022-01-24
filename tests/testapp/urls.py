@@ -1,4 +1,5 @@
 from django.urls import include, path
+
 from tests.testapp.food import views
 
 urlpatterns = [

@@ -1,10 +1,10 @@
 from django.db.models import Prefetch
 from django.test import TestCase
-from tests.integration.fixtures import bulk_create_toppings_pizzas_restaurants
-from tests.testapp.food.models import Pizza, Restaurant
 
 from django_query_profiler.client.context_manager import QueryProfiler
 from django_query_profiler.query_profiler_storage import QueryProfilerLevel, QuerySignatureAnalyzeResult
+from tests.integration.fixtures import bulk_create_toppings_pizzas_restaurants
+from tests.testapp.food.models import Pizza, Restaurant
 
 
 def run_twice_with_debug_toggled(test_func):

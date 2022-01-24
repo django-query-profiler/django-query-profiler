@@ -1,4 +1,5 @@
 from django.http import HttpRequest, HttpResponse
+
 from tests.testapp.food.models import Pizza, Restaurant
 
 

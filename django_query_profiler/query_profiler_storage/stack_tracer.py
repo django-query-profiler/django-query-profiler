@@ -80,7 +80,7 @@ def find_stack_trace(app_module_names_to_exclude: Tuple[str], django_module_name
 
 
 def _module_name_from_frame(frame):
-    return frame.f_globals['__name__']
+    return frame.f_globals.get('__name__', '')
 
 
 def _function_name_from_frame(frame):

@@ -37,16 +37,14 @@ Implementation Notes:
 4.  For finding which QueryProfilerType would be active, we are again using a stack.  And using the fact that if anyone
     above the current call has used QUERY_SIGNATURE, the active one would be QUERY_SIGNATURE
 """
-
+import hashlib
 import re
 import threading
-from binascii import hexlify
 from collections import Counter
 from time import time
 from typing import List, Optional, Union
 
 import django.db.models as django_base_model
-import mmh3 as mmh3
 from django.conf import settings
 
 from . import QueryProfiledData, QueryProfilerLevel, QuerySignature, QuerySignatureStatistics
@@ -130,8 +128,9 @@ class DataCollectorThreadLocalStorage(threading.local):
             query_execution_time_in_micros=query_execution_time_in_micros,
             db_row_count=db_row_count)
 
-        query_params_db_key = (query_without_params, params or '', target_db)
-        query_params_db_key_hash = hexlify(mmh3.hash_bytes(str(query_params_db_key)))
+        query_params_db_key = str((query_without_params, params or '', target_db)).encode('utf8')
+        query_params_db_key_bytes = str(query_params_db_key).encode('utf8')
+        query_params_db_key_hash = hashlib.sha256(query_params_db_key_bytes).hexdigest()
 
         new_query_profiled_data = QueryProfiledData(
             query_signature_to_query_signature_statistics={query_signature: query_signature_statistics},
